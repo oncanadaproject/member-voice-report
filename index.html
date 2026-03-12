@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Voice Report — The Big Picture | Ram4Change</title>
+  <meta name="description" content="What OPSEU members are saying — data from six open townhalls, Nov 2025 to Mar 2026.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+
+/* ═══════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════ */
+
+const THEMES = [
+  {
+    name: "Support & Servicing",
+    pct: 21.9, ratio: "1 in 5", mentions: 100, total: 457, color: "#0f224e",
+    headline: "Locals are running on fumes — and nobody's refuelling them.",
+    quote: "I'm drowning. My members are drowning. And every time I call for a lifeline, I get a voicemail.",
+    speaker: "Local president",
+    desc: "The single loudest signal across every townhall. Local leaders describe being overwhelmed, under-resourced, and left to figure it out alone — while their members pay the price.",
+    ramQuote: "If you can't tell me the staff-to-member ratio — if administration can't answer that basic question — then we don't have a staffing plan. We have a staffing crisis we're choosing not to measure.",
+    ramSource: "Ram Selvarajah, Dec 2025 Townhall"
+  },
+  {
+    name: "Transparency & Accountability",
+    pct: 17.9, ratio: "1 in 6", mentions: 82, total: 457, color: "#3e5184",
+    headline: "Members want to know where their dues go. They're not getting answers.",
+    quote: "We're paying dues while locals on strike run out of money for hand warmers. Meanwhile, 30 people fly in for a conference. Where's the accountability?",
+    speaker: "Member",
+    desc: "Financial clarity isn't a nice-to-have — it's a trust issue. Members are asking basic questions about budgets, spending, and priorities, and they feel stonewalled.",
+    ramQuote: "It's your money. It's your dues. There shouldn't be any hide-and-seek on it. Every resolution with a dollar sign on it should go through a value-for-money lens.",
+    ramSource: "Ram Selvarajah, Dec 2025 Townhall"
+  },
+  {
+    name: "Training & Capacity",
+    pct: 16.0, ratio: "1 in 6", mentions: 73, total: 457, color: "#3e5184",
+    headline: "Stewards are being sent into fights they haven't been trained for.",
+    quote: "The employer rep across the table does this full-time. I got a two-day workshop three years ago. How is that a fair fight?",
+    speaker: "Steward",
+    desc: "Education is too generic, too rare, and too disconnected from what members actually face. OPS and BPS members get lumped together despite completely different realities.",
+    ramQuote: "Our strength is in our educated members. If your steward can't quote the collective agreement back to the employer, that's not a steward problem — that's a training failure.",
+    ramSource: "Ram Selvarajah, Feb 2026 Townhall"
+  },
+  {
+    name: "Communication & Engagement",
+    pct: 15.5, ratio: "1 in 6", mentions: 71, total: 457, color: "#6b7f99",
+    headline: "Members aren't apathetic. They're just not being asked.",
+    quote: "Nobody told me there was a union card. Nobody told me I could get involved. I found out by accident — and now I'm a steward. How many people never get that accident?",
+    speaker: "Steward",
+    desc: "The disconnect isn't laziness — it's infrastructure. Members want two-way communication, not one-way newsletters. They want to be invited, not informed after the fact.",
+    ramQuote: "Members aren't apathetic — they're not being invited in. Nobody's asking them because we're not involving them. That has to change from day one.",
+    ramSource: "Ram Selvarajah, Nov 2025 Townhall"
+  },
+  {
+    name: "Culture, Respect & Inclusion",
+    pct: 10.3, ratio: "1 in 10", mentions: 47, total: 457, color: "#574b4f",
+    headline: "There's a climate of fear — and members know it.",
+    quote: "I support you. But I can't like your post. I can't be seen. The culture at OPSEU right now is terrifying and I can't jeopardize my job by publicly supporting you. I'm sorry.",
+    speaker: "Member, Feb 2026",
+    desc: "Factionalism, side-channel politics, and a culture where speaking up feels risky. Members see it. They feel it. And it's eroding trust from the inside.",
+    ramQuote: "When members are afraid to publicly agree with a good idea because of who said it — that's not politics. That's a climate of fear. And it's killing honest conversation in this union.",
+    ramSource: "Ram Selvarajah, Feb 2026 Townhall"
+  },
+  {
+    name: "Grievance & Representation",
+    pct: 6.3, ratio: "1 in 16", mentions: 29, total: 457, color: "#7a6058",
+    headline: "When members need help most, the system isn't there.",
+    quote: "Five staff reps in four years. Every time you start over. Every time you explain your whole situation from scratch. At some point you just stop calling.",
+    speaker: "Member, Feb 2026",
+    desc: "Grievance handling is the core test of a union. Members describe a system where overworked reps, constant turnover, and impossible caseloads mean their issues fall through the cracks.",
+    ramQuote: "You call your staff rep and you get a response: I'm in bargaining, won't be back for weeks. Not available. That's not a system — that's a breakdown.",
+    ramSource: "Ram Selvarajah, Feb 2026 Townhall"
+  },
+  {
+    name: "Bread-and-Butter Priorities",
+    pct: 6.1, ratio: "1 in 16", mentions: 28, total: 457, color: "#dca694",
+    headline: "We're earning 1995 wages in a 2026 economy.",
+    quote: "I can't afford to volunteer for the union. I can't afford to attend convention. I'm choosing between groceries and gas. And you want me to be engaged?",
+    speaker: "Member, Feb 2026",
+    desc: "Wages haven't kept pace since 2012. BPS workers hover near minimum wage. The cost-of-living crisis isn't abstract — it's why members feel abandoned by the institutions meant to fight for them.",
+    ramQuote: "For us to expect members to engage in the union when they're struggling for their basic needs — housing, groceries, gas — it's tough. We have to fight for the fundamentals first.",
+    ramSource: "Ram Selvarajah, Feb 2026 Townhall"
+  },
+  {
+    name: "Renewal & Younger Members",
+    pct: 5.9, ratio: "1 in 17", mentions: 27, total: 457, color: "#b89080",
+    headline: "Young workers have energy. The union has a door that's closed.",
+    quote: "I just knew I was paying dues. I had no idea who was involved, what the chain of command was, or how I could get involved. Nobody ever told me.",
+    speaker: "Provincial Young Workers rep, Dec 2025",
+    desc: "Young workers bring exactly what the movement needs — energy, digital fluency, urgency. But seniority culture, inaccessible structures, and zero outreach keep them on the outside.",
+    ramQuote: "If we're not dragging our young people in, we're going to lose the union movement. They have a lot to contribute — but we have to open the door first.",
+    ramSource: "Ram Selvarajah, Dec 2025 Townhall"
+  }
+];
+
+const PULL_QUOTES = [
+  { text: "I'm drowning. My members are drowning. And every time I call for a lifeline, I get a voicemail.", speaker: "Local president" },
+  { text: "Don't play dirty politics in the boardroom at the cost of our members' welfare and services.", speaker: "Member, Feb 2026" },
+  { text: "I can't afford to volunteer for the union. I can't afford convention. I'm choosing between groceries and gas. And you want me to be engaged?", speaker: "Member, Feb 2026" },
+  { text: "Nobody told me there was a union card. Nobody told me I could get involved. I found out by accident.", speaker: "Steward" },
+  { text: "I support you. But I can't like your post. I can't be seen. The culture at OPSEU right now is terrifying and I can't jeopardize my job by publicly supporting you. I'm sorry.", speaker: "Member, Feb 2026" },
+  { text: "Way too much money is wasted on inefficient projects and wasteful costly resources. Where is that accountability?", speaker: "Member, Jan 2026" },
+];
+
+/* ═══════════════════════════════════════════
+   SHARED COMPONENTS
+   ═══════════════════════════════════════════ */
+
+function AnimateIn({ children, delay = 0 }) {
+  const ref = useRef(null);
+  const [v, setV] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setTimeout(() => setV(true), delay); obs.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [delay]);
+  return (
+    <div ref={ref} style={{
+      opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(18px)",
+      transition: `opacity 0.55s ease ${delay}ms, transform 0.55s ease ${delay}ms`
+    }}>{children}</div>
+  );
+}
+
+function StatCard({ value, label, sublabel, dark }) {
+  return (
+    <div style={{
+      background: dark ? "#0f224e" : "rgba(27,58,92,0.06)",
+      color: dark ? "#fff" : "#0f224e",
+      borderRadius: 14, padding: "28px 24px", flex: "1 1 200px", minWidth: 180,
+    }}>
+      <div style={{ fontFamily: "var(--f-display)", fontSize: "2.8rem", fontWeight: 700, lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: "0.95rem", fontWeight: 600, marginTop: 8, lineHeight: 1.3 }}>{label}</div>
+      {sublabel && <div style={{ fontSize: "0.8rem", opacity: 0.7, marginTop: 4 }}>{sublabel}</div>}
+    </div>
+  );
+}
+
+function QuoteCarousel() {
+  const [c, setC] = useState(0);
+  useEffect(() => { const t = setInterval(() => setC(p => (p + 1) % PULL_QUOTES.length), 6000); return () => clearInterval(t); }, []);
+  const q = PULL_QUOTES[c];
+  return (
+    <div style={{ background: "linear-gradient(135deg, #0f224e, #3e5184)", borderRadius: 20, padding: "48px 40px", position: "relative", overflow: "hidden", minHeight: 200 }}>
+      <div style={{ position: "absolute", top: 20, left: 30, fontFamily: "var(--f-display)", fontSize: "8rem", color: "rgba(255,255,255,0.06)", lineHeight: 1, userSelect: "none" }}>&ldquo;</div>
+      <div key={c} style={{ animation: "fadeQ 0.6s ease", position: "relative", zIndex: 1 }}>
+        <p style={{ fontFamily: "var(--f-body)", fontSize: "1.35rem", color: "#fff", lineHeight: 1.55, fontStyle: "italic", margin: "0 0 16px 0", maxWidth: 640 }}>&ldquo;{q.text}&rdquo;</p>
+        <cite style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", fontStyle: "normal", fontWeight: 600 }}>&mdash; {q.speaker}</cite>
+      </div>
+      <div style={{ display: "flex", gap: 8, marginTop: 28, position: "relative", zIndex: 1 }}>
+        {PULL_QUOTES.map((_, i) => (
+          <button key={i} onClick={() => setC(i)} style={{ width: i === c ? 28 : 8, height: 8, borderRadius: 4, background: i === c ? "#dca694" : "rgba(255,255,255,0.2)", border: "none", cursor: "pointer", transition: "all 0.3s", padding: 0 }} />
+        ))}
+      </div>
+      <style>{`@keyframes fadeQ{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}`}</style>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   STACKED BAR
+   ═══════════════════════════════════════════ */
+
+function StackedBar({ activeIndex, onSelect }) {
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{
+        display: "flex", borderRadius: 8, overflow: "hidden", height: 40, cursor: "pointer",
+        border: "1px solid rgba(27,58,92,0.1)",
+      }}>
+        {THEMES.map((t, i) => (
+          <div
+            key={i}
+            onClick={() => onSelect(i)}
+            title={`${t.name}: ${t.pct}%`}
+            style={{
+              width: `${t.pct}%`,
+              background: t.color,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#fff",
+              fontSize: t.pct > 8 ? "0.75rem" : "0.6rem",
+              fontWeight: 700,
+              transition: "opacity 0.2s, filter 0.2s",
+              opacity: activeIndex !== null && activeIndex !== i ? 0.45 : 1,
+              filter: activeIndex === i ? "brightness(1.2)" : "none",
+              position: "relative",
+              borderRight: i < THEMES.length - 1 ? "1px solid rgba(255,255,255,0.2)" : "none",
+            }}
+          >
+            {t.pct > 7 ? `${t.pct}%` : ""}
+          </div>
+        ))}
+      </div>
+      <div style={{
+        fontSize: "0.72rem", color: "#8b8b8b", marginTop: 6,
+        display: "flex", justifyContent: "space-between",
+      }}>
+        <span>Click any segment to explore.</span>
+        <span></span>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   THEME CARD (with Ram's voice)
+   ═══════════════════════════════════════════ */
+
+function ThemeCard({ theme, index, expanded, onToggle, cardRef }) {
+  const barW = (theme.pct / 22) * 100;
+  return (
+    <div ref={cardRef} onClick={onToggle} style={{
+      background: "#fff", borderRadius: 16, border: "1px solid rgba(27,58,92,0.1)", overflow: "hidden", cursor: "pointer",
+      transition: "box-shadow 0.3s, border-color 0.3s",
+      boxShadow: expanded ? "0 8px 32px rgba(27,58,92,0.12)" : "0 2px 8px rgba(27,58,92,0.04)",
+      borderColor: expanded ? "rgba(27,58,92,0.25)" : "rgba(27,58,92,0.1)",
+    }}>
+      <div style={{ padding: "24px 28px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+              <span style={{ background: theme.color, color: "#fff", fontSize: "0.7rem", fontWeight: 700, padding: "3px 10px", borderRadius: 20, letterSpacing: "0.05em", textTransform: "uppercase" }}>#{index + 1}</span>
+              <span style={{ fontSize: "0.8rem", color: "#6b7f99", fontWeight: 600 }}>{theme.name}</span>
+            </div>
+            <h3 style={{ fontFamily: "var(--f-display)", fontSize: "1.15rem", fontWeight: 700, color: "#0f224e", lineHeight: 1.35, margin: 0 }}>{theme.headline}</h3>
+          </div>
+          <div style={{ fontFamily: "var(--f-display)", fontSize: "2rem", fontWeight: 700, color: theme.color, lineHeight: 1, whiteSpace: "nowrap" }}>{theme.pct}%</div>
+        </div>
+        <div style={{ marginTop: 14, height: 6, background: "rgba(27,58,92,0.06)", borderRadius: 3, overflow: "hidden" }}>
+          <div style={{ width: `${barW}%`, height: "100%", background: `linear-gradient(90deg, ${theme.color}, ${theme.color}cc)`, borderRadius: 3, transition: "width 1s ease" }} />
+        </div>
+      </div>
+      <div style={{ maxHeight: expanded ? 600 : 0, opacity: expanded ? 1 : 0, overflow: "hidden", transition: "max-height 0.5s ease, opacity 0.4s ease, padding 0.4s ease", padding: expanded ? "0 28px 28px" : "0 28px 0" }}>
+        <p style={{ fontSize: "0.92rem", color: "#574b4f", lineHeight: 1.6, margin: "0 0 16px 0" }}>{theme.desc}</p>
+        {/* Member quote */}
+        <blockquote style={{ margin: "0 0 18px 0", padding: "16px 20px", background: "rgba(27,58,92,0.04)", borderLeft: `3px solid ${theme.color}`, borderRadius: "0 10px 10px 0" }}>
+          <p style={{ fontFamily: "var(--f-body)", fontSize: "1rem", fontStyle: "italic", color: "#0f224e", lineHeight: 1.5, margin: 0 }}>&ldquo;{theme.quote}&rdquo;</p>
+          <cite style={{ display: "block", marginTop: 8, fontSize: "0.78rem", color: "#6b7f99", fontStyle: "normal", fontWeight: 600 }}>&mdash; {theme.speaker}</cite>
+        </blockquote>
+        {/* Ram on this issue */}
+        <div style={{
+          padding: "16px 20px",
+          background: "rgba(196,149,106,0.08)",
+          borderLeft: "3px solid #dca694",
+          borderRadius: "0 10px 10px 0",
+        }}>
+          <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#dca694", marginBottom: 8 }}>Ram on this issue</div>
+          <p style={{ fontFamily: "var(--f-body)", fontSize: "0.95rem", fontStyle: "italic", color: "#0f224e", lineHeight: 1.5, margin: 0 }}>&ldquo;{theme.ramQuote}&rdquo;</p>
+          <cite style={{ display: "block", marginTop: 8, fontSize: "0.75rem", color: "#574b4f", fontStyle: "normal", fontWeight: 600 }}>&mdash; {theme.ramSource}</cite>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   OVERVIEW PAGE
+   ═══════════════════════════════════════════ */
+
+function OverviewPage() {
+  const [exp, setExp] = useState(null);
+  const cardRefs = useRef([]);
+
+  function handleBarClick(i) {
+    setExp(prev => prev === i ? null : i);
+    setTimeout(() => {
+      if (cardRefs.current[i]) {
+        cardRefs.current[i].scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 100);
+  }
+
+  return (
+    <>
+      {/* CONFIDENCE BASELINE */}
+      <AnimateIn>
+        <div style={{
+          background: "#fff", borderRadius: 20, padding: "36px 32px",
+          margin: "40px 0 20px", border: "1px solid rgba(15,34,78,0.08)",
+        }}>
+          <h2 style={{
+            fontFamily: "var(--f-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.7rem)", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.03em", color: "#0f224e",
+            margin: "0 0 20px 0", lineHeight: 1.25,
+          }}>We asked members: how supported do you feel by your union?</h2>
+
+          {/* Big number */}
+          <div style={{
+            background: "linear-gradient(135deg, #0f224e, #3e5184)", borderRadius: 14,
+            padding: "24px 28px", marginBottom: 20, color: "#fff",
+          }}>
+            <div style={{ fontFamily: "var(--f-display)", fontSize: "clamp(2.2rem, 6vw, 3.4rem)", fontWeight: 700, lineHeight: 1, textTransform: "uppercase" }}>
+              65.9% rated support low
+            </div>
+            <div style={{ fontSize: "0.9rem", marginTop: 8, color: "rgba(255,255,255,0.7)" }}>
+              Ratings of 1–2 on a 5-point scale. This trust baseline is why support, accountability, and practical capacity dominate what members raised.
+            </div>
+          </div>
+
+          {/* Trust bar */}
+          <div>
+            <div style={{ display: "flex", borderRadius: 8, overflow: "hidden", height: 40 }}>
+              <div style={{ width: "34.1%", background: "#dca694", display: "flex", alignItems: "center", justifyContent: "center", color: "#0f224e", fontSize: "0.72rem", fontWeight: 700 }}>34.1%</div>
+              <div style={{ width: "31.8%", background: "#c4956a", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.72rem", fontWeight: 700 }}>31.8%</div>
+              <div style={{ width: "18.2%", background: "#3e5184", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.72rem", fontWeight: 700 }}>18.2%</div>
+              <div style={{ width: "11.4%", background: "#0f224e", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.68rem", fontWeight: 700 }}>11.4%</div>
+              <div style={{ width: "4.5%", background: "#0a0e18", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.55rem", fontWeight: 700 }}>5%</div>
+            </div>
+            {/* Legend — evenly spaced across full width */}
+            <div style={{
+              display: "flex", justifyContent: "space-between", marginTop: 10,
+              fontSize: "0.72rem", color: "#574b4f",
+            }}>
+              <span style={{ textAlign: "left" }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 4, background: "#dca694", marginRight: 4, verticalAlign: "middle" }}></span>1 Not at all</span>
+              <span style={{ textAlign: "center" }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 4, background: "#c4956a", marginRight: 4, verticalAlign: "middle" }}></span>2 Slightly</span>
+              <span style={{ textAlign: "center" }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 4, background: "#3e5184", marginRight: 4, verticalAlign: "middle" }}></span>3 Somewhat</span>
+              <span style={{ textAlign: "center" }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 4, background: "#0f224e", marginRight: 4, verticalAlign: "middle" }}></span>4 Mostly</span>
+              <span style={{ textAlign: "right" }}><span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 4, background: "#0a0e18", marginRight: 4, verticalAlign: "middle" }}></span>5 Very</span>
+            </div>
+          </div>
+        </div>
+      </AnimateIn>
+
+      {/* TWO STAT CARDS — what replaced the old 3 */}
+      <AnimateIn delay={40}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 14, margin: "0 0 48px" }}>
+          <div style={{
+            background: "linear-gradient(135deg, #0f224e, #3e5184)", color: "#fff",
+            borderRadius: 14, padding: "28px 24px",
+            flex: "1 1 300px", minWidth: 260,
+          }}>
+            <div style={{ fontFamily: "var(--f-display)", fontSize: "2.8rem", fontWeight: 700, lineHeight: 1 }}>6</div>
+            <div style={{ fontFamily: "var(--f-display)", fontSize: "1rem", fontWeight: 700, marginTop: 8, textTransform: "uppercase", letterSpacing: "0.03em" }}>
+              Open sessions over 5 months
+            </div>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.55, margin: "10px 0 18px 0" }}>
+              Nov 2025 – Mar 2026. Any member could attend, with messaging intentionally inviting both folks who were skeptical and supportive of Ram — because all members deserve to be heard, not just the folks who agree with you.
+            </p>
+            <a
+              href="https://ram4change.ca/rsvp"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block", padding: "10px 24px",
+                background: "#dca694", color: "#0f224e",
+                borderRadius: 8, fontFamily: "var(--f-display)",
+                fontSize: "0.82rem", fontWeight: 700, textDecoration: "none",
+                textTransform: "uppercase", letterSpacing: "0.05em",
+                transition: "opacity 0.2s",
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+            >
+              RSVP to the next session &rarr;
+            </a>
+          </div>
+          <div style={{
+            background: "rgba(62,81,132,0.08)", color: "#0f224e", borderRadius: 14, padding: "28px 24px",
+            flex: "1 1 220px", minWidth: 180,
+          }}>
+            <div style={{ fontFamily: "var(--f-display)", fontSize: "2.8rem", fontWeight: 700, lineHeight: 1 }}>71.3%</div>
+            <div style={{ fontSize: "0.95rem", fontWeight: 600, marginTop: 8, lineHeight: 1.3 }}>of all issues fall into 4 themes</div>
+            <div style={{ fontSize: "0.8rem", opacity: 0.7, marginTop: 4 }}>Support, accountability, training, and communication. The pattern is consistent.</div>
+          </div>
+        </div>
+      </AnimateIn>
+
+      <AnimateIn delay={80}><div style={{ marginBottom: 48 }}><QuoteCarousel /></div></AnimateIn>
+
+      <AnimateIn delay={120}>
+        <div style={{ marginBottom: 20 }}>
+          <h2 style={{ fontFamily: "var(--f-display)", fontSize: "1.9rem", fontWeight: 700, margin: "0 0 8px 0" }}>What keeps coming up — every single time</h2>
+          <p style={{ fontSize: "0.95rem", color: "#6b7f99", lineHeight: 1.5, margin: "0 0 16px 0" }}>
+            8 themes appeared across every session. Click any segment to jump to the detail. Tap any card to hear what members said — and how Ram responded.
+          </p>
+        </div>
+      </AnimateIn>
+
+      {/* STACKED BAR */}
+      <AnimateIn delay={140}>
+        <div style={{ marginBottom: 16 }}>
+          <StackedBar activeIndex={exp} onSelect={handleBarClick} />
+        </div>
+      </AnimateIn>
+
+      {/* THEME INDEX — clickable 1–8 list */}
+      <AnimateIn delay={160}>
+        <div style={{
+          background: "#fff", borderRadius: 16, padding: "20px 24px",
+          marginBottom: 28, border: "1px solid rgba(15,34,78,0.08)",
+        }}>
+          {THEMES.map((t, i) => (
+            <div
+              key={i}
+              onClick={() => handleBarClick(i)}
+              style={{
+                display: "flex", alignItems: "center", gap: 12,
+                padding: "10px 8px", cursor: "pointer",
+                borderBottom: i < THEMES.length - 1 ? "1px solid rgba(15,34,78,0.06)" : "none",
+                transition: "background 0.15s",
+                borderRadius: 8,
+                background: exp === i ? "rgba(62,81,132,0.06)" : "transparent",
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(62,81,132,0.04)"}
+              onMouseLeave={e => e.currentTarget.style.background = exp === i ? "rgba(62,81,132,0.06)" : "transparent"}
+            >
+              <span style={{
+                fontFamily: "var(--f-display)", fontSize: "0.85rem", fontWeight: 700,
+                color: "#fff", background: t.color, width: 28, height: 28,
+                borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0,
+              }}>{i + 1}</span>
+              <span style={{
+                fontSize: "0.88rem", fontWeight: 600, color: "#0f224e", flex: 1,
+              }}>{t.name}</span>
+              <span style={{
+                fontFamily: "var(--f-display)", fontSize: "1rem", fontWeight: 700,
+                color: t.color,
+              }}>{t.pct}%</span>
+            </div>
+          ))}
+        </div>
+      </AnimateIn>
+
+      {/* THEME GRID — 2-col top 4, then list */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 56 }}>
+        {THEMES.map((t, i) => (
+          <AnimateIn key={i} delay={160 + i * 35}>
+            <ThemeCard
+              theme={t}
+              index={i}
+              expanded={exp === i}
+              onToggle={() => setExp(exp === i ? null : i)}
+              cardRef={el => cardRefs.current[i] = el}
+            />
+          </AnimateIn>
+        ))}
+      </div>
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   METHOD SECTION (collapsible)
+   ═══════════════════════════════════════════ */
+
+function MethodSection() {
+  const [open, setOpen] = useState(false);
+  return (
+    <AnimateIn>
+      <div style={{
+        background: "rgba(15,34,78,0.04)", borderRadius: 16,
+        marginBottom: 56, overflow: "hidden",
+        border: "1px solid rgba(15,34,78,0.06)",
+      }}>
+        <button
+          onClick={() => setOpen(!open)}
+          style={{
+            width: "100%", padding: "20px 28px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            background: "none", border: "none", cursor: "pointer",
+            fontFamily: "var(--f-display)", fontWeight: 700, color: "#0f224e",
+            fontSize: "0.9rem", letterSpacing: "0.04em", textTransform: "uppercase",
+            textAlign: "left",
+          }}
+        >
+          <span>How this report was built</span>
+          <span style={{
+            width: 28, height: 28, borderRadius: "50%",
+            background: "rgba(15,34,78,0.06)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "0.85rem", color: "#6b7f99", flexShrink: 0,
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s",
+          }}>&#9662;</span>
+        </button>
+        <div style={{
+          maxHeight: open ? 600 : 0,
+          opacity: open ? 1 : 0,
+          overflow: "hidden",
+          transition: "max-height 0.5s ease, opacity 0.4s ease",
+        }}>
+          <div style={{ padding: "0 28px 28px", fontSize: "0.88rem", color: "#574b4f", lineHeight: 1.7 }}>
+            <p style={{ margin: "0 0 14px 0" }}>
+              This report is built from everything members shared across Ram's town halls: live conversations, Zoom chat, and pre-registration comments. All of it is coded the same way, every single time.
+            </p>
+            <p style={{ margin: "0 0 14px 0" }}>
+              What you see here are aggregate themes and trends over time. We do it this way on purpose. It protects member privacy, and it means no one gets to handpick quotes that make them look good. What participants said is kept separate from what Ram said. Same method, every cycle. Clear totals are published so you can see what is consistent and what is changing.
+            </p>
+            <p style={{ margin: "0 0 14px 0" }}>
+              Our town halls run between 1.5 and 2 hours and have drawn diverse membership across regions, divisions, and sectors. This offers a compelling, data-driven view of what members are facing. That said, this is participation-based data, not a membership-wide survey.
+            </p>
+            <p style={{ margin: 0, color: "#0f224e", fontWeight: 600 }}>
+              The range is real, the signal is strong, and if Ram is elected, you can count on this kind of member-driven data and insights extending beyond a campaign — into bargaining, budgets, and how leadership reports back to you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </AnimateIn>
+  );
+}
+/* ═══════════════════════════════════════════
+   APP
+   ═══════════════════════════════════════════ */
+
+function MemberVoiceDashboard() {
+  return (
+    <div style={{ "--f-display": "'Oswald', sans-serif", "--f-body": "'Open Sans', sans-serif", fontFamily: "'Open Sans', sans-serif", background: "#e8ecf0", minHeight: "100vh", color: "#0f224e" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+      <header style={{ background: "linear-gradient(135deg, #0a0e18 0%, #0f224e 40%, #3e5184 100%)", padding: "56px 32px 0", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 20% 80%, rgba(220,166,148,0.12) 0%, transparent 60%)" }} />
+        <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#dca694", marginBottom: 18 }}>Ram4Change &middot; Member Voice Report</div>
+          <h1 style={{ fontFamily: "var(--f-display)", fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, color: "#fff", lineHeight: 1.15, margin: "0 0 18px 0", textTransform: "uppercase", letterSpacing: "0.02em" }}>
+            You told us what's broken.<br /><span style={{ color: "#dca694" }}>We heard every word.</span>
+          </h1>
+          <p style={{ fontSize: "0.88rem", fontWeight: 700, color: "#dca694", margin: "0 0 10px 0", letterSpacing: "0.01em" }}>
+            A member-driven mandate isn't a slogan. It's a practice.
+          </p>
+          <p style={{ fontSize: "1.02rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.6, maxWidth: 600, margin: "0 0 32px 0" }}>
+            Real change starts with real information — not slogans, not speeches, not campaign promises. Over five months and six open sessions, OPSEU members told us what's working, what's failing, and what they need. This is what they said — and what Ram had to say back.
+          </p>
+          <div style={{
+            display: "inline-block", padding: "14px 28px",
+            background: "#e8ecf0", color: "#0f224e",
+            borderRadius: "12px 12px 0 0", fontSize: "0.9rem", fontWeight: 700,
+            fontFamily: "var(--f-display)", textTransform: "uppercase", letterSpacing: "0.04em",
+          }}>The Big Picture</div>
+        </div>
+      </header>
+
+      <main style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px" }}>
+        <OverviewPage />
+        <MethodSection />
+      </main>
+
+      <footer style={{ background: "#0a0e18", padding: "24px 32px" }}>
+        <div style={{
+          maxWidth: 800, margin: "0 auto",
+          display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center",
+          gap: "6px 16px",
+          fontSize: "0.68rem", color: "rgba(255,255,255,0.35)",
+        }}>
+          <span>Ram4Change</span>
+          <span style={{ opacity: 0.4 }}>&middot;</span>
+          <span>Member Voice Report</span>
+          <span style={{ opacity: 0.4 }}>&middot;</span>
+          <span>Last Updated March 2026</span>
+          <span style={{ opacity: 0.4 }}>&middot;</span>
+          <span>Designed by <a href="https://www.groupproject.ca" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.5)", textDecoration: "underline", textUnderlineOffset: "2px" }}>Group Project Initiatives</a></span>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<MemberVoiceDashboard />);
+  </script>
+</body>
+</html>
