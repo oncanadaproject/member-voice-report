@@ -577,5 +577,14 @@ function MemberVoiceDashboard() {
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<MemberVoiceDashboard />);
   </script>
+  <script>
+  function sendHeight() {
+    var h = document.getElementById('root').scrollHeight;
+    window.parent.postMessage({ type: 'resize', height: h }, '*');
+  }
+  window.addEventListener('load', sendHeight);
+  window.addEventListener('resize', sendHeight);
+  setInterval(sendHeight, 500);
+</script>
 </body>
 </html>
