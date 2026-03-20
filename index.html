@@ -664,34 +664,38 @@
     /* ── VIEW TABS ── */
     .view-tabs {
       display: flex;
-      gap: 0;
+      gap: 6px;
       margin-bottom: 32px;
       background: rgba(15,34,78,0.06);
-      border-radius: 12px;
-      padding: 4px;
-      max-width: 420px;
+      border-radius: 14px;
+      padding: 5px;
     }
     .view-tab {
       flex: 1;
-      padding: 12px 20px;
+      padding: 16px 24px;
       border: none;
       background: none;
       cursor: pointer;
       font-family: var(--f-display);
-      font-size: 0.85rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--navy);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      border-radius: 10px;
-      transition: background 0.25s, color 0.25s;
+      letter-spacing: 0.05em;
+      border-radius: 11px;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+      position: relative;
     }
     .view-tab.active {
       background: var(--navy);
       color: #fff;
+      box-shadow: 0 2px 8px rgba(15,34,78,0.18);
     }
     .view-tab:not(.active):hover {
-      background: rgba(15,34,78,0.08);
+      background: rgba(15,34,78,0.1);
+    }
+    .view-tab:not(.active) {
+      border: 1px solid transparent;
     }
     #map-content { border-radius: 16px; overflow: hidden; }
 
@@ -802,6 +806,13 @@
       border-radius: 10px;
       background: rgba(15,34,78,0.04);
       border: 1px solid rgba(15,34,78,0.08);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .summary-pill:hover {
+      background: rgba(15,34,78,0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(15,34,78,0.08);
     }
     .summary-pill .dot {
       width: 10px; height: 10px;
@@ -844,6 +855,230 @@
     .carousel-text.fade-in {
       animation: fadeQ 0.6s ease;
     }
+
+    /* ── PLAN TAB: PRINCIPLES CAROUSEL ── */
+    .plan-principles-wrap {
+      position: relative;
+      margin: 0 -24px;
+      padding: 0 24px;
+    }
+    .plan-principles-carousel {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+    }
+    .plan-principles-carousel::-webkit-scrollbar { display: none; }
+    .plan-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      padding: 0 4px;
+    }
+    .plan-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 36px;
+      border: 1px solid rgba(15,34,78,0.07);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .plan-counter {
+      font-family: var(--f-display);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--warm-dark);
+      margin-bottom: 14px;
+    }
+    .plan-principle-name {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .plan-principle-text {
+      font-size: 0.95rem;
+      color: var(--dark-warm);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+    .plan-carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .plan-carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(15,34,78,0.15);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .plan-carousel-dot.active {
+      background: var(--navy);
+      width: 28px;
+      border-radius: 5px;
+    }
+    .plan-carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      z-index: 3;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(15,34,78,0.2);
+    }
+    .plan-carousel-nav:hover {
+      background: var(--blue);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .plan-carousel-nav:disabled {
+      opacity: 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    .plan-carousel-prev { left: -8px; }
+    .plan-carousel-next { right: -8px; }
+    .plan-swipe-hint {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── PLAN TAB: PRIORITY BLOCKS ── */
+    .plan-section-header {
+      margin: 48px 0 28px;
+    }
+    .plan-section-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-dark);
+      margin-bottom: 8px;
+    }
+    .plan-section-title {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .plan-section-desc {
+      font-size: 0.92rem;
+      color: var(--dark-warm);
+      line-height: 1.6;
+      margin-top: 10px;
+      max-width: 620px;
+    }
+    .priority-block { margin-bottom: 40px; }
+    .priority-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--navy);
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .priority-label.secondary { background: var(--blue); }
+    .plan-action-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .plan-action-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.55;
+      border: 1px solid rgba(15,34,78,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .plan-action-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15,34,78,0.06);
+    }
+    .plan-action-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      margin-top: 2px;
+      background: rgba(15,34,78,0.06);
+    }
+    .plan-action-item strong { font-weight: 700; }
+    .plan-action-item .action-detail { color: var(--dark-warm); }
+    .plan-quote-strip {
+      background: #fff;
+      border-left: 4px solid var(--warm);
+      border-radius: 0 14px 14px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .plan-quote-text {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--navy);
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+    .plan-quote-attr {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .plan-principles-wrap { margin: 0 -16px; padding: 0 16px; }
+      .plan-carousel-nav { display: none; }
+      .plan-card { padding: 32px 24px; min-height: 180px; }
+      .plan-action-item { padding: 16px 18px; }
+    }
   </style>
 </head>
 <body>
@@ -883,24 +1118,10 @@
       </div>
     </div>
 
-    <!-- STAT ROW -->
-    <div class="stat-row anim">
-      <div class="stat-card-primary">
-        <div class="stat-big">7</div>
-        <div class="stat-label">Open sessions over 5 months</div>
-        <p class="stat-desc">Nov 2025 – Mar 2026. Any member could attend, with messaging intentionally inviting both folks who were skeptical and supportive of Ram — because all members deserve to be heard.</p>
-        <a href="https://ram4change.ca/rsvp" target="_blank" rel="noopener noreferrer" class="rsvp-btn">RSVP to the next session &rarr;</a>
-      </div>
-      <div class="stat-card-secondary">
-        <div class="stat-big">12</div>
-        <div style="font-size:0.95rem;font-weight:600;margin-top:8px;line-height:1.3">specific issues members kept raising — across regions, sectors, and sessions</div>
-        <div class="stat-desc">Not themes we picked. Problems members couldn't stop talking about. We tracked every one.</div>
-      </div>
-    </div>
-
-    <!-- VIEW TABS -->
+    <!-- VIEW TABS (moved up, under confidence) -->
     <div class="view-tabs anim">
       <button class="view-tab active" data-view="issues">What We Heard</button>
+      <button class="view-tab" data-view="plan">The Plan</button>
       <button class="view-tab" data-view="map">Who's in the Room</button>
     </div>
 
@@ -909,8 +1130,111 @@
       <div id="map-root"></div>
     </div>
 
+    <!-- PLAN TAB CONTENT (hidden by default) -->
+    <div id="plan-content" style="display:none">
+
+      <!-- Quote -->
+      <div class="plan-quote-strip anim">
+        <div class="plan-quote-text">&ldquo;For too long our members have been asked to settle for less. I'm asking you to expect more, and know that I intend to deliver it.&rdquo;</div>
+        <div class="plan-quote-attr">&mdash; Ram Selvarajah, No-Slate Blog, Feb 9</div>
+      </div>
+
+      <!-- Principles Carousel -->
+      <div class="plan-section-header anim">
+        <div class="plan-section-tag">Practicing My Promises</div>
+        <h2 class="plan-section-title">Six Principles</h2>
+        <p class="plan-section-desc">These aren't slogans &mdash; they're commitments this campaign is already living by.</p>
+      </div>
+
+      <div class="plan-principles-wrap anim">
+        <button class="plan-carousel-nav plan-carousel-prev" aria-label="Previous" disabled>&#8592;</button>
+        <button class="plan-carousel-nav plan-carousel-next" aria-label="Next">&#8594;</button>
+        <div class="plan-principles-carousel" id="planCarousel">
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 01 of 06</div>
+            <div class="plan-principle-name">See the Problem Before You Fix It</div>
+            <p class="plan-principle-text">No more guessing. Before any reform, we measure what's actually happening &mdash; staff workload, local health, where the money goes. You can't fix what you can't see.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 02 of 06</div>
+            <div class="plan-principle-name">Give People the Tools, Then Expect Results</div>
+            <p class="plan-principle-text">The first question isn't &ldquo;who's failing?&rdquo; &mdash; it's &ldquo;do you have what you need to do your job?&rdquo; Fix the system before you blame the people in it.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 03 of 06</div>
+            <div class="plan-principle-name">My Running Mate Is You</div>
+            <p class="plan-principle-text">No slate. No backroom deals. No loyalty debts. The First VP/Treasurer should be a check and balance on power &mdash; not an extension of it.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 04 of 06</div>
+            <div class="plan-principle-name">Show the Work</div>
+            <p class="plan-principle-text">This campaign isn't built on promises &mdash; it's built on practice. The townhalls, the dashboard, the data are a proof-of-concept for how the office should run.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 05 of 06</div>
+            <div class="plan-principle-name">Wages, Representation, Protection</div>
+            <p class="plan-principle-text">The union exists for one reason: to make sure working people have a good standard of living and their rights are protected. Everything else flows from that.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 06 of 06</div>
+            <div class="plan-principle-name">Eight Years, Then It's Your Turn</div>
+            <p class="plan-principle-text">No career politicians here. Two terms maximum &mdash; then real succession planning, knowledge transfer, and room for the next generation of leaders.</p>
+          </div></div>
+        </div>
+        <div class="plan-carousel-dots" id="planDots"></div>
+        <div class="plan-swipe-hint">Swipe or use arrows to explore</div>
+      </div>
+
+      <!-- Priority Action Items -->
+      <div class="plan-section-header anim">
+        <div class="plan-section-tag">The Roadmap</div>
+        <h2 class="plan-section-title">Priority Action Items</h2>
+        <p class="plan-section-desc">Not vague promises. Not &ldquo;if elected.&rdquo; These are the things that happen first &mdash; because you can't fix what you haven't measured.</p>
+      </div>
+
+      <div class="priority-block anim">
+        <div class="priority-label">&#9673; Day One Priorities</div>
+        <ul class="plan-action-list">
+          <li class="plan-action-item"><div class="plan-action-icon">📊</div><div><strong>Commission a staff workload audit.</strong> <span class="action-detail">How many members per rep? What are the backlogs? Where are the gaps? This is literally the first order of business.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🛠️</div><div><strong>Ask every staff member: &ldquo;Do you have what you need?&rdquo;</strong> <span class="action-detail">A skills inventory that starts with support, not blame. Fix the system before you blame the people in it.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏥</div><div><strong>Launch a local health assessment.</strong> <span class="action-detail">Every local's structure, resources, and capacity reviewed. If we can see which locals are struggling, we can send support before they collapse.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">💰</div><div><strong>Start the budget process earlier.</strong> <span class="action-detail">Every dollar of member dues should be traceable, defensible, and working harder than it is now. No more lazy across-the-board cuts.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">💻</div><div><strong>Technology audit.</strong> <span class="action-detail">Scope every core system from UnionWare to grievance tracking. IT is my profession &mdash; I'll lead this personally.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🎤</div><div><strong>Monthly open townhalls with members.</strong> <span class="action-detail">The campaign model, continued from office. Your voice stays in the room &mdash; permanently.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="priority-block anim">
+        <div class="priority-label secondary">&#9671; Once I Understand the Full Picture</div>
+        <ul class="plan-action-list">
+          <li class="plan-action-item"><div class="plan-action-icon">&#9889;</div><div><strong>Technology modernization.</strong> <span class="action-detail">Real-time membership databases, dashboards for local presidents, board meeting streaming, grievance tracking you can actually use. Scoped and budgeted based on what the audit reveals.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🔀</div><div><strong>Staff restructuring.</strong> <span class="action-detail">If the data supports it &mdash; a dedicated bargaining unit so negotiations get the specialized attention they deserve. Separate bargaining from servicing.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">📚</div><div><strong>Education reform.</strong> <span class="action-detail">OPS and BPS in separate classrooms. President scholarships. CA-specific steward training. Rebuilt college partnerships. Because our stewards shouldn't be going to the table underprepared.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏗️</div><div><strong>Local restructuring.</strong> <span class="action-detail">Where health assessments reveal structural problems &mdash; book-off formulas, composite locals, geographic boundaries. Support first, redesign where needed.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">&#9878;️</div><div><strong>Cross-sector bargaining coordination.</strong> <span class="action-detail">Bring all bargaining team chairs together. Workers facing the same employer shouldn't be isolated &mdash; and COLA belongs in every contract.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏛️</div><div><strong>Political advocacy capacity.</strong> <span class="action-detail">A lobby function within the union. Continuous engagement with government &mdash; strategic instead of reactive. We need to be at the table, not just on the picket line.</span></div></li>
+        </ul>
+      </div>
+
+    </div><!-- /plan-content -->
+
     <!-- ISSUES TAB CONTENT -->
     <div id="issues-content">
+
+    <!-- STAT ROW -->
+    <div class="stat-row anim">
+      <div class="stat-card-primary">
+        <div class="stat-big">7</div>
+        <div class="stat-label">Open sessions over 5 months</div>
+        <p class="stat-desc">Nov 2025 &ndash; Mar 2026. Any member could attend, with messaging intentionally inviting both folks who were skeptical and supportive of Ram &mdash; because all members deserve to be heard.</p>
+        <a href="https://ram4change.ca/rsvp" target="_blank" rel="noopener noreferrer" class="rsvp-btn">RSVP to the next session &rarr;</a>
+      </div>
+      <div class="stat-card-secondary">
+        <div class="stat-big">12</div>
+        <div style="font-size:0.95rem;font-weight:600;margin-top:8px;line-height:1.3">specific issues members kept raising &mdash; across regions, sectors, and sessions</div>
+        <div class="stat-desc">Not themes we picked. Problems members couldn't stop talking about. We tracked every one.</div>
+      </div>
+    </div>
 
     <!-- QUOTE CAROUSEL -->
     <div class="carousel anim" id="carousel">
@@ -927,17 +1251,17 @@
       <p>We ran 7 open sessions. 12 specific issues kept coming up. Here they are — ranked by urgency and paired with what Ram plans to do about each one.</p>
       <p class="tap-hint">Tap any issue to see the full picture — member voices, the plan, and Ram's take.</p>
       <div class="summary-bar">
-        <div class="summary-pill">
+        <div class="summary-pill" data-tier="critical">
           <span class="dot" style="background:var(--critical)"></span>
           <span class="count">3</span>
           <span class="pill-label">Critical</span>
         </div>
-        <div class="summary-pill">
+        <div class="summary-pill" data-tier="high">
           <span class="dot" style="background:var(--high)"></span>
           <span class="count">4</span>
           <span class="pill-label">High Priority</span>
         </div>
-        <div class="summary-pill">
+        <div class="summary-pill" data-tier="recurring">
           <span class="dot" style="background:var(--recurring)"></span>
           <span class="count">5</span>
           <span class="pill-label">Recurring</span>
@@ -1235,7 +1559,7 @@ function renderIssues() {
   TIERS.forEach(tier => {
     if (tier.issues.length === 0) return;
     html += `
-      <div class="tier-header anim">
+      <div class="tier-header anim" id="tier-${tier.key}">
         <span class="tier-badge ${tier.key}">${tier.label}</span>
         <span class="tier-count">${tier.issues.length} issue${tier.issues.length > 1 ? 's' : ''}</span>
       </div>
@@ -1328,8 +1652,93 @@ document.querySelectorAll('.view-tab').forEach(btn => {
     document.querySelectorAll('.view-tab').forEach(b => b.classList.toggle('active', b === btn));
     document.getElementById('map-content').style.display = view === 'map' ? 'block' : 'none';
     document.getElementById('issues-content').style.display = view === 'issues' ? 'block' : 'none';
+    document.getElementById('plan-content').style.display = view === 'plan' ? 'block' : 'none';
+    // Re-trigger animations for newly visible content
+    observeAnimations();
+    // Initialize plan carousel when plan tab is shown
+    if (view === 'plan' && !window._planCarouselInit) {
+      initPlanCarousel();
+    }
   });
 });
+
+/* ═══════════════════════════════════════════
+   SUMMARY PILL ANCHORS
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('.summary-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const tierKey = pill.dataset.tier;
+    const tierEl = document.getElementById('tier-' + tierKey);
+    if (tierEl) {
+      tierEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════
+   PLAN CAROUSEL
+   ═══════════════════════════════════════════ */
+
+function initPlanCarousel() {
+  window._planCarouselInit = true;
+  const carousel = document.getElementById('planCarousel');
+  if (!carousel) return;
+  const slides = carousel.querySelectorAll('.plan-slide');
+  const dotsContainer = document.getElementById('planDots');
+  const prevBtn = document.querySelector('.plan-carousel-prev');
+  const nextBtn = document.querySelector('.plan-carousel-next');
+  let current = 0;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'plan-carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to principle ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(index) {
+    current = index;
+    const slide = slides[index];
+    const scrollLeft = slide.offsetLeft - (carousel.offsetWidth - slide.offsetWidth) / 2;
+    carousel.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    updateDots();
+  }
+
+  function updateDots() {
+    dotsContainer.querySelectorAll('.plan-carousel-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === current);
+    });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
+  nextBtn.addEventListener('click', () => { if (current < slides.length - 1) goTo(current + 1); });
+
+  let scrollTimer;
+  carousel.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const center = carousel.scrollLeft + carousel.offsetWidth / 2;
+      let closest = 0, closestDist = Infinity;
+      slides.forEach((slide, i) => {
+        const dist = Math.abs(center - (slide.offsetLeft + slide.offsetWidth / 2));
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      current = closest;
+      updateDots();
+    }, 60);
+  });
+
+  carousel.setAttribute('tabindex', '0');
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && current > 0) { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight' && current < slides.length - 1) { e.preventDefault(); goTo(current + 1); }
+  });
+}
 
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS
