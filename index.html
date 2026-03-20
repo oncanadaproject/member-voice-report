@@ -87,41 +87,6 @@
       max-width: 600px;
       margin: 0 0 32px;
     }
-    .hero-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      padding: 18px 24px;
-      background: rgba(0,0,0,0.35);
-      border-top: 1px solid rgba(220,166,148,0.25);
-      margin: 0 -32px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-nav-link {
-      font-family: var(--f-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      padding: 6px 16px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 4px;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .hero-nav-link:hover {
-      color: #fff;
-      background: rgba(220,166,148,0.2);
-      border-color: var(--warm);
-    }
-    .hero-nav-divider {
-      color: rgba(255,255,255,0.2);
-      font-size: 1rem;
-    }
     .hero-tab {
       display: inline-block;
       padding: 14px 28px;
@@ -874,9 +839,6 @@
     }
     @media (max-width: 600px) {
       .hero { padding: 40px 20px 0; }
-      .hero-nav { margin: 0 -20px; gap: 10px; padding: 14px 16px; flex-wrap: wrap; }
-      .hero-nav-link { font-size: 0.78rem; padding: 5px 12px; }
-      .hero-nav-divider { display: none; }
       main { padding: 0 16px; }
       .confidence { padding: 24px 20px; }
       .issue-face { padding: 20px 20px; }
@@ -1136,41 +1098,11 @@
       <p class="hero-subtitle">A member-driven mandate isn't a slogan. It's a practice.</p>
       <p class="hero-desc">Real change starts with real information — not slogans, not speeches, not campaign promises. Over five months and seven open sessions, OPSEU members told us what's working, what's failing, and what they need. This is what they said — and what Ram plans to do about each one.</p>
     </div>
-    <nav class="hero-nav">
-      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="issues">What We Heard</a>
-      <span class="hero-nav-divider">&middot;</span>
-      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="map">Who's in the Room</a>
-      <span class="hero-nav-divider">&middot;</span>
-      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="plan">The Plan &amp; Principles</a>
-    </nav>
   </header>
 
   <main>
 
-    <!-- CONFIDENCE BLOCK -->
-    <div class="confidence anim">
-      <h2>We asked members: how supported do you feel by your union?</h2>
-      <div class="big-number">
-        <div class="big-number-text">2 out of 3 rated support low</div>
-        <div class="big-number-sub">On a 5-point scale, nearly two-thirds of members rated their union support a 1 or a 2. That's the starting point for everything below.</div>
-      </div>
-      <div class="trust-bar">
-        <div style="width:34.1%;background:var(--warm);color:var(--navy)">34.1%</div>
-        <div style="width:31.8%;background:var(--warm-dark);color:#fff">31.8%</div>
-        <div style="width:18.2%;background:var(--blue);color:#fff">18.2%</div>
-        <div style="width:11.4%;background:var(--navy);color:#fff">11.4%</div>
-        <div style="width:4.5%;background:var(--near-black);color:#fff;font-size:0.55rem">5%</div>
-      </div>
-      <div class="trust-legend">
-        <span><span class="legend-dot" style="background:var(--warm)"></span>1 Not at all</span>
-        <span><span class="legend-dot" style="background:var(--warm-dark)"></span>2 Slightly</span>
-        <span><span class="legend-dot" style="background:var(--blue)"></span>3 Somewhat</span>
-        <span><span class="legend-dot" style="background:var(--navy)"></span>4 Mostly</span>
-        <span><span class="legend-dot" style="background:var(--near-black)"></span>5 Very</span>
-      </div>
-    </div>
-
-    <!-- VIEW TABS (moved up, under confidence) -->
+    <!-- VIEW TABS -->
     <div class="view-tabs anim">
       <button class="view-tab active" data-view="issues">What We Heard</button>
       <button class="view-tab" data-view="plan">The Plan</button>
@@ -1306,6 +1238,29 @@
 
     <!-- ISSUES TAB CONTENT -->
     <div id="issues-content">
+
+    <!-- CONFIDENCE BLOCK -->
+    <div class="confidence anim">
+      <h2>We asked members: how supported do you feel by your union?</h2>
+      <div class="big-number">
+        <div class="big-number-text">2 out of 3 rated support low</div>
+        <div class="big-number-sub">On a 5-point scale, nearly two-thirds of members rated their union support a 1 or a 2. That's the starting point for everything below.</div>
+      </div>
+      <div class="trust-bar">
+        <div style="width:34.1%;background:var(--warm);color:var(--navy)">34.1%</div>
+        <div style="width:31.8%;background:var(--warm-dark);color:#fff">31.8%</div>
+        <div style="width:18.2%;background:var(--blue);color:#fff">18.2%</div>
+        <div style="width:11.4%;background:var(--navy);color:#fff">11.4%</div>
+        <div style="width:4.5%;background:var(--near-black);color:#fff;font-size:0.55rem">5%</div>
+      </div>
+      <div class="trust-legend">
+        <span><span class="legend-dot" style="background:var(--warm)"></span>1 Not at all</span>
+        <span><span class="legend-dot" style="background:var(--warm-dark)"></span>2 Slightly</span>
+        <span><span class="legend-dot" style="background:var(--blue)"></span>3 Somewhat</span>
+        <span><span class="legend-dot" style="background:var(--navy)"></span>4 Mostly</span>
+        <span><span class="legend-dot" style="background:var(--near-black)"></span>5 Very</span>
+      </div>
+    </div>
 
     <!-- STAT ROW -->
     <div class="stat-row anim">
