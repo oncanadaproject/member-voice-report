@@ -856,6 +856,47 @@
       animation: fadeQ 0.6s ease;
     }
 
+    /* ── UTILITY NAV ── */
+    .utility-nav {
+      background: var(--near-black);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .utility-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 24px;
+      flex-wrap: wrap;
+    }
+    .utility-nav a {
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .utility-nav a:hover {
+      color: var(--warm);
+    }
+    .utility-divider {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.8rem;
+    }
+    .utility-divider-bar {
+      margin: 0 6px;
+      color: rgba(255,255,255,0.15);
+      font-size: 0.9rem;
+    }
+    .utility-tab-link {
+      cursor: pointer;
+    }
+
     /* ── PLAN TAB: PRINCIPLES CAROUSEL ── */
     .plan-principles-wrap {
       position: relative;
@@ -1082,6 +1123,21 @@
   </style>
 </head>
 <body>
+
+  <!-- UTILITY NAV -->
+  <nav class="utility-nav">
+    <div class="utility-nav-inner">
+      <a href="https://www.ram4change.ca/blog/walk-the-talk" target="_blank" rel="noopener noreferrer">Why We Made This</a>
+      <span class="utility-divider">&middot;</span>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe4YyyAJJh1ariaum6mnoBAOOO9E51z6XPu_vriQOObB53Ccg/viewform" target="_blank" rel="noopener noreferrer">Add Your Voice</a>
+      <span class="utility-divider utility-divider-bar">|</span>
+      <a href="#" class="utility-tab-link" data-target-view="issues">What We Heard</a>
+      <span class="utility-divider">&middot;</span>
+      <a href="#" class="utility-tab-link" data-target-view="map">Who's in the Room</a>
+      <span class="utility-divider">&middot;</span>
+      <a href="#" class="utility-tab-link" data-target-view="plan">The Plan & Principles</a>
+    </div>
+  </nav>
 
   <!-- HEADER -->
   <header class="hero">
@@ -1658,6 +1714,26 @@ document.querySelectorAll('.view-tab').forEach(btn => {
     // Initialize plan carousel when plan tab is shown
     if (view === 'plan' && !window._planCarouselInit) {
       initPlanCarousel();
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════
+   UTILITY NAV TAB LINKS
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('.utility-tab-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetView = link.dataset.targetView;
+    // Activate the matching tab button
+    const matchingTab = document.querySelector('.view-tab[data-view="' + targetView + '"]');
+    if (matchingTab) {
+      matchingTab.click();
+      // Scroll the tabs area into view
+      setTimeout(() => {
+        matchingTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   });
 });
