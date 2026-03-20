@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12 Issues | Ram4Change</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f224e;
+      --blue: #3e5184;
+      --light-bg: #e8ecf0;
+      --warm: #dca694;
+      --warm-dark: #c4956a;
+      --dark-warm: #574b4f;
+      --muted: #6b7f99;
+      --critical: #c0392b;
+      --high: #e67e22;
+      --recurring: #2980b9;
+      --f-display: 'Oswald', sans-serif;
+      --f-body: 'Open Sans', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f-body);
+      background: transparent;
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+    }
+    .embed-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .section-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-dark);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .issues-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .issue-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(15,34,78,0.08);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .issue-card:hover {
+      border-color: rgba(15,34,78,0.18);
+      box-shadow: 0 4px 16px rgba(15,34,78,0.08);
+    }
+    .issue-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .issue-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .issue-urgency {
+      font-family: var(--f-display);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+    .issue-sessions {
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-weight: 600;
+      margin-left: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .issue-title {
+      font-family: var(--f-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+    .issue-headline {
+      font-size: 0.78rem;
+      color: var(--dark-warm);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .cta-row {
+      text-align: center;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: #fff;
+      border-radius: 8px;
+      font-family: var(--f-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* Tablet: 3 cols */
+    @media (max-width: 900px) {
+      .issues-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    /* Mobile: 2 cols */
+    @media (max-width: 600px) {
+      .embed-wrap { padding: 20px 16px; }
+      .issues-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .issue-card { padding: 16px 14px; }
+      .issue-sessions { display: none; }
+    }
+    /* Small mobile: 1 col */
+    @media (max-width: 400px) {
+      .issues-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="embed-wrap">
+    <div class="section-tag">What We Heard</div>
+    <h2 class="section-title">12 Issues. Exposed by Members.</h2>
+    <p class="section-desc">We ran 7 open sessions. These are the issues members kept raising &mdash; ranked by urgency.</p>
+
+    <div class="issues-grid" id="issues-grid"></div>
+
+    <div class="cta-row">
+      <a href="https://www.ram4change.ca/mandate" class="cta-btn" target="_top">See What We're Doing About It &rarr;</a>
+    </div>
+  </div>
+
+  <script>
+    const ISSUES = [
+      { title: "Staff Rep Workload & Availability", icon: "🔥", urgency: "critical", urgencyLabel: "Critical", headline: "You call for help. You get a voicemail. You call again. Nothing.", townhalls: "Every session" },
+      { title: "Local Support & Restructuring", icon: "🏗️", urgency: "critical", urgencyLabel: "Critical", headline: "Local presidents are running their locals off the side of their desks.", townhalls: "Every session" },
+      { title: "Wages & Cost-of-Living Adjustments", icon: "📉", urgency: "critical", urgencyLabel: "Critical", headline: "We're earning 1995 wages in a 2026 economy.", townhalls: "5 of 7" },
+      { title: "Financial Transparency & Budget Accountability", icon: "💰", urgency: "high", urgencyLabel: "High Priority", headline: "Members want to see where their dues go. They're not getting answers.", townhalls: "Every session" },
+      { title: "Technology Modernization", icon: "💻", urgency: "high", urgencyLabel: "High Priority", headline: "The systems are stuck in 2005 — and members are paying the price.", townhalls: "5 of 7" },
+      { title: "Board Division & Toxic Culture", icon: "⚠️", urgency: "high", urgencyLabel: "High Priority", headline: "There's a climate of fear — and members know it.", townhalls: "5 of 7" },
+      { title: "Member Engagement & Organizing Model", icon: "📢", urgency: "high", urgencyLabel: "High Priority", headline: "Members aren't apathetic. They're just not being asked.", townhalls: "Every session" },
+      { title: "Young Worker Inclusion & Mentorship", icon: "🌱", urgency: "recurring", urgencyLabel: "Recurring", headline: "Young workers have energy. The union has a door that's closed.", townhalls: "5 of 7" },
+      { title: "Education & Training Reform", icon: "📚", urgency: "recurring", urgencyLabel: "Recurring", headline: "Stewards are being sent into fights they haven't been trained for.", townhalls: "5 of 7" },
+      { title: "Hiring Transparency & Accountability", icon: "🔍", urgency: "recurring", urgencyLabel: "Recurring", headline: "Members want fair, merit-based hiring — not favours.", townhalls: "3 of 7" },
+      { title: "Financial Misconduct & Accountability Gaps", icon: "⚖️", urgency: "recurring", urgencyLabel: "Recurring", headline: "When money goes missing, the systems that should catch it aren't there.", townhalls: "3 of 7" },
+      { title: "Retirees as a Resource", icon: "🤝", urgency: "recurring", urgencyLabel: "Recurring", headline: "Decades of knowledge, willing to help — and we're not asking.", townhalls: "3 of 7" },
+    ];
+
+    const urgencyColors = { critical: 'var(--critical)', high: 'var(--high)', recurring: 'var(--recurring)' };
+    const grid = document.getElementById('issues-grid');
+
+    grid.innerHTML = ISSUES.map(issue => `
+      <div class="issue-card">
+        <div class="issue-top">
+          <span class="issue-icon">${issue.icon}</span>
+          <span class="issue-urgency" style="background:${urgencyColors[issue.urgency]}">${issue.urgencyLabel}</span>
+          <span class="issue-sessions">${issue.townhalls}</span>
+        </div>
+        <div class="issue-title">${issue.title}</div>
+        <div class="issue-headline">${issue.headline}</div>
+      </div>
+    `).join('');
+
+    // Auto-resize for iframe embedding
+    function postHeight() {
+      const h = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'resize-issues', height: h }, '*');
+    }
+    new ResizeObserver(postHeight).observe(document.body);
+    postHeight();
+  </script>
+</body>
+</html>
