@@ -1,0 +1,3110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Voice Report | Ram4Change</title>
+  <meta name="description" content="What OPSEU members are saying — data from seven open townhalls, Nov 2025 to Mar 2026.">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    :root {
+      --navy: #0f224e;
+      --blue: #3e5184;
+      --light-bg: #e8ecf0;
+      --warm: #dca694;
+      --warm-dark: #c4956a;
+      --near-black: #0a0e18;
+      --dark-warm: #574b4f;
+      --muted: #6b7f99;
+      --f-display: 'Oswald', sans-serif;
+      --f-body: 'Open Sans', sans-serif;
+      --critical: #DC2626;
+      --high: #EA580C;
+      --recurring: #3e5184;
+      --watching: #6b7f99;
+      --opportunity: #16A34A;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f-body);
+      background: var(--light-bg);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── HEADER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--near-black) 0%, var(--navy) 40%, var(--blue) 100%);
+      padding: 56px 32px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 80%, rgba(220,166,148,0.12) 0%, transparent 60%);
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: var(--f-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin: 0 0 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 span { color: var(--warm); }
+    .hero-subtitle {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--warm);
+      margin: 0 0 10px;
+    }
+    .hero-desc {
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 0 32px;
+    }
+    .hero-tab {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--light-bg);
+      color: var(--navy);
+      border-radius: 12px 12px 0 0;
+      font-family: var(--f-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── ANIMATE IN ── */
+    .anim {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .anim.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── CONFIDENCE BLOCK ── */
+    .confidence {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      margin: 40px 0 20px;
+      border: 1px solid rgba(15,34,78,0.08);
+    }
+    .confidence h2 {
+      font-family: var(--f-display);
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--navy);
+      margin: 0 0 20px;
+      line-height: 1.25;
+    }
+    .big-number {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .big-number-text {
+      font-family: var(--f-display);
+      font-size: clamp(2.2rem, 6vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .big-number-sub {
+      font-size: 0.9rem;
+      margin-top: 8px;
+      color: rgba(255,255,255,0.7);
+    }
+    .trust-bar {
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 40px;
+    }
+    .trust-bar div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .trust-legend {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 0.72rem;
+      color: var(--dark-warm);
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .trust-legend span { display: flex; align-items: center; gap: 4px; }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── STAT CARDS ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0 0 28px;
+    }
+    .stat-card-primary {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      flex: 1 1 260px;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-card-secondary {
+      background: rgba(62,81,132,0.08);
+      color: var(--navy);
+      border-radius: 10px;
+      padding: 16px 20px;
+      flex: 1 1 200px;
+      min-width: 160px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-big {
+      font-family: var(--f-display);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .stat-label {
+      font-family: var(--f-display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      line-height: 1.3;
+    }
+    .stat-desc {
+      font-size: 0.78rem;
+      line-height: 1.45;
+      margin: 4px 0 0;
+      opacity: 0.75;
+    }
+    .rsvp-btn {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--warm);
+      color: var(--navy);
+      border-radius: 6px;
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    .rsvp-btn:hover { opacity: 0.85; }
+
+    /* ── QUOTE CAROUSEL ── */
+    .carousel {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      border-radius: 20px;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      margin-bottom: 48px;
+    }
+    .carousel-bigquote {
+      position: absolute;
+      top: 20px; left: 30px;
+      font-family: var(--f-display);
+      font-size: 8rem;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      user-select: none;
+    }
+    .carousel-text {
+      position: relative;
+      z-index: 1;
+    }
+    .carousel-text p {
+      font-family: var(--f-body);
+      font-size: 1.35rem;
+      color: #fff;
+      line-height: 1.55;
+      font-style: italic;
+      margin: 0 0 16px;
+      max-width: 640px;
+    }
+    .carousel-text cite {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .carousel-dot {
+      height: 8px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+    .carousel-dot.active {
+      width: 28px;
+      background: var(--warm);
+    }
+    .carousel-dot:not(.active) {
+      width: 8px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ── URGENCY TIER HEADER ── */
+    .tier-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 48px 0 18px;
+    }
+    .tier-badge {
+      font-family: var(--f-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 6px;
+      color: #fff;
+    }
+    .tier-badge.critical { background: var(--critical); }
+    .tier-badge.high { background: var(--high); }
+    .tier-badge.recurring { background: var(--recurring); }
+    .tier-badge.watching { background: var(--watching); }
+    .tier-badge.opportunity { background: var(--opportunity); }
+    .tier-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ── ISSUE GRID ── */
+    .issue-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    /* ── ISSUE CARD ── */
+    .issue-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(27,58,92,0.1);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .issue-card.expanded {
+      grid-column: 1 / -1;
+    }
+    .issue-card:hover {
+      box-shadow: 0 4px 16px rgba(27,58,92,0.08);
+    }
+    .issue-card.expanded {
+      box-shadow: 0 8px 32px rgba(27,58,92,0.12);
+      border-color: rgba(27,58,92,0.25);
+    }
+    .issue-face {
+      padding: 24px 28px;
+    }
+    .issue-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .issue-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .issue-icon { font-size: 1.3rem; line-height: 1; }
+    .issue-title-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .issue-urgency-pill {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+      color: #fff;
+    }
+    .issue-headline {
+      font-family: var(--f-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+      margin: 0 0 8px;
+    }
+    .issue-quote-face {
+      font-size: 0.88rem;
+      color: var(--dark-warm);
+      line-height: 1.55;
+      font-style: italic;
+      margin: 0 0 14px;
+    }
+    .chevron-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(15,34,78,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .issue-card.expanded .chevron-btn {
+      transform: rotate(180deg);
+    }
+
+    /* ── FREQUENCY & HEAT STRIPE ── */
+    .issue-data-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .freq-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .freq-badge .num {
+      font-family: var(--f-display);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .freq-badge .label {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .freq-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(15,34,78,0.12);
+    }
+    .heat-stripe {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+    .heat-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-right: 4px;
+    }
+    .heat-block {
+      width: 28px;
+      height: 16px;
+      border-radius: 3px;
+      transition: opacity 0.3s;
+    }
+    .session-label {
+      font-size: 0.55rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ── EXPANDED CONTENT ── */
+    .issue-expand {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.4s ease;
+      padding: 0 28px 0;
+    }
+    .issue-card.expanded .issue-expand {
+      max-height: 1200px;
+      opacity: 1;
+      padding: 0 28px 28px;
+    }
+    .expand-section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .expand-text {
+      font-size: 0.92rem;
+      color: var(--dark-warm);
+      line-height: 1.65;
+      margin: 0 0 18px;
+    }
+    .member-blockquote {
+      margin: 0 0 18px;
+      padding: 16px 20px;
+      background: rgba(27,58,92,0.04);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 10px 10px 0;
+    }
+    .member-blockquote p {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--navy);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .member-blockquote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .plan-block {
+      margin: 0 0 18px;
+      padding: 16px 20px;
+      background: rgba(15,34,78,0.03);
+      border-left: 3px solid var(--navy);
+      border-radius: 0 10px 10px 0;
+    }
+    .plan-block p {
+      font-size: 0.9rem;
+      color: var(--dark-warm);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .practice-block {
+      margin: 0 0 18px;
+      padding: 16px 20px;
+      background: rgba(22,163,74,0.06);
+      border-left: 3px solid var(--opportunity);
+      border-radius: 0 10px 10px 0;
+    }
+    .practice-block .expand-section-label { color: var(--opportunity); }
+    .practice-block ul {
+      margin: 0;
+      padding: 0 0 0 18px;
+      list-style: none;
+    }
+    .practice-block li {
+      font-size: 0.88rem;
+      color: var(--dark-warm);
+      line-height: 1.55;
+      margin: 0 0 8px;
+      position: relative;
+      padding-left: 4px;
+    }
+    .practice-block li::before {
+      content: '✓';
+      position: absolute;
+      left: -18px;
+      color: var(--opportunity);
+      font-weight: 700;
+    }
+    .practice-block li:last-child { margin-bottom: 0; }
+    .ram-block {
+      padding: 16px 20px;
+      background: rgba(220,166,148,0.08);
+      border-left: 3px solid var(--warm);
+      border-radius: 0 10px 10px 0;
+    }
+    .ram-block .expand-section-label { color: var(--warm); }
+    .ram-block p {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--navy);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .ram-block cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--dark-warm);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-head h2 {
+      font-family: var(--f-display);
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+    .section-head p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 4px;
+    }
+    .section-head .tap-hint {
+      font-size: 0.88rem;
+      color: var(--dark-warm);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* ── METHOD ── */
+    .method {
+      background: rgba(15,34,78,0.04);
+      border-radius: 16px;
+      margin: 56px 0;
+      overflow: hidden;
+      border: 1px solid rgba(15,34,78,0.06);
+    }
+    .method-toggle {
+      width: 100%;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--f-display);
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .method-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+    }
+    .method.open .method-content {
+      max-height: 800px;
+      opacity: 1;
+    }
+    .method-body {
+      padding: 0 28px 28px;
+      font-size: 0.88rem;
+      color: var(--dark-warm);
+      line-height: 1.7;
+    }
+    .method-body p { margin: 0 0 14px; }
+    .method-body p:last-child { margin: 0; color: var(--navy); font-weight: 600; }
+
+    /* ── VIEW TABS ── */
+    .view-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 32px;
+      background: rgba(15,34,78,0.06);
+      border-radius: 14px;
+      padding: 5px;
+    }
+    .view-tab {
+      flex: 1;
+      padding: 16px 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: var(--f-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 11px;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .view-tab.active {
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(15,34,78,0.18);
+    }
+    .view-tab:not(.active):hover {
+      background: rgba(15,34,78,0.1);
+    }
+    .view-tab:not(.active) {
+      border: 1px solid transparent;
+    }
+    #map-content { border-radius: 16px; overflow: hidden; }
+
+    /* ── VOICE CTA ── */
+    .voice-cta {
+      background: linear-gradient(135deg, var(--near-black) 0%, var(--navy) 50%, var(--blue) 100%);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .voice-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(220,166,148,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .voice-cta h3 {
+      font-family: var(--f-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .voice-cta p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    .voice-cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .voice-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-family: var(--f-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .voice-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .voice-btn-primary {
+      background: var(--warm);
+      color: var(--navy);
+    }
+    .voice-btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    @media (max-width: 600px) {
+      .voice-cta { padding: 36px 24px; }
+      .voice-cta h3 { font-size: 1.4rem; }
+      .voice-btn { padding: 12px 24px; font-size: 0.82rem; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--near-black);
+      padding: 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px 16px;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-inner a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── SUMMARY BAR ── */
+    .summary-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0 0;
+    }
+    .summary-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: rgba(15,34,78,0.04);
+      border: 1px solid rgba(15,34,78,0.08);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .summary-pill:hover {
+      background: rgba(15,34,78,0.08);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(15,34,78,0.08);
+    }
+    .summary-pill .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .summary-pill .count {
+      font-family: var(--f-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .summary-pill .pill-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 768px) {
+      .issue-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 40px 20px 0; }
+      main { padding: 0 16px; }
+      .confidence { padding: 24px 20px; }
+      .issue-face { padding: 20px 20px; }
+      .issue-expand { padding-left: 20px !important; padding-right: 20px !important; }
+      .heat-block { width: 20px; height: 14px; }
+      .carousel { padding: 36px 24px; }
+      .stat-card-primary, .stat-card-secondary { min-width: 100%; }
+    }
+
+    @keyframes fadeQ {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .carousel-text.fade-in {
+      animation: fadeQ 0.6s ease;
+    }
+
+    /* ── UTILITY NAV ── */
+    .utility-nav {
+      background: var(--near-black);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .utility-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 24px;
+      flex-wrap: wrap;
+    }
+    .utility-nav a {
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .utility-nav a:hover {
+      color: var(--warm);
+    }
+    .utility-divider {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.8rem;
+    }
+
+
+    /* ── PLAN TAB: PRINCIPLES GRID ── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: start;
+    }
+    .principle-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(15,34,78,0.08);
+      overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .principle-card:hover {
+      border-color: rgba(15,34,78,0.18);
+      box-shadow: 0 4px 16px rgba(15,34,78,0.08);
+    }
+    .principle-card.open {
+      border-color: var(--navy);
+    }
+    .principle-card-face {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 22px;
+    }
+    .principle-num {
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--warm-dark);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .principle-title {
+      font-family: var(--f-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      line-height: 1.25;
+      flex: 1;
+      margin: 0;
+    }
+    .principle-toggle {
+      font-family: var(--f-display);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      line-height: 1;
+    }
+    .principle-card.open .principle-toggle {
+      transform: rotate(45deg);
+      color: var(--navy);
+    }
+    .principle-card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 22px;
+    }
+    .principle-card.open .principle-card-body {
+      max-height: 500px;
+      padding: 0 22px 22px;
+    }
+    .principle-card-body p {
+      font-size: 0.9rem;
+      color: var(--dark-warm);
+      line-height: 1.65;
+      margin: 0;
+      border-top: 1px solid rgba(15,34,78,0.06);
+      padding-top: 16px;
+    }
+
+    /* ── PLAN TAB: PRIORITY BLOCKS ── */
+    .plan-section-header {
+      margin: 48px 0 28px;
+    }
+    .plan-section-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--warm-dark);
+      margin-bottom: 8px;
+    }
+    .plan-section-title {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .plan-section-desc {
+      font-size: 0.92rem;
+      color: var(--dark-warm);
+      line-height: 1.6;
+      margin-top: 10px;
+      max-width: 620px;
+    }
+    .priority-block { margin-bottom: 40px; }
+    .priority-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--f-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--navy);
+      padding: 8px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .priority-label.secondary { background: var(--blue); }
+    .plan-action-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .plan-action-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 24px;
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.55;
+      border: 1px solid rgba(15,34,78,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .plan-action-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15,34,78,0.06);
+    }
+    .plan-action-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      margin-top: 2px;
+      background: rgba(15,34,78,0.06);
+    }
+    .plan-action-item strong { font-weight: 700; }
+    .plan-action-item .action-detail { color: var(--dark-warm); }
+    .plan-quote-strip {
+      background: #fff;
+      border-left: 4px solid var(--warm);
+      border-radius: 0 14px 14px 0;
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+    .plan-quote-text {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--navy);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .plan-quote-attr {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .principles-grid { grid-template-columns: 1fr; }
+      .plan-card { padding: 32px 24px; min-height: 180px; }
+      .plan-action-item { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- UTILITY NAV -->
+  <nav class="utility-nav">
+    <div class="utility-nav-inner">
+      <a href="https://www.ram4change.ca/blog/walk-the-talk" target="_blank" rel="noopener noreferrer">Why We Made This</a>
+      <span class="utility-divider">&middot;</span>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe4YyyAJJh1ariaum6mnoBAOOO9E51z6XPu_vriQOObB53Ccg/viewform" target="_blank" rel="noopener noreferrer">Add Your Voice</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Ram4Change &middot; Member Voice Report</div>
+      <h1>You told us what's broken.<br><span>We heard every word.</span></h1>
+      <p class="hero-subtitle">A member-driven mandate isn't a slogan. It's a practice.</p>
+      <p class="hero-desc">Real change starts with real information — not slogans, not speeches, not campaign promises. Over five months and seven open sessions, OPSEU members told us what's working, what's failing, and what they need. This is what they said — and what Ram plans to do about each one.</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- VIEW TABS -->
+    <div class="view-tabs anim">
+      <button class="view-tab" data-view="issues">What We Heard</button>
+      <button class="view-tab active" data-view="plan">The Plan</button>
+      <button class="view-tab" data-view="map">Who's in the Room</button>
+    </div>
+
+    <!-- MAP TAB CONTENT (hidden by default) -->
+    <div id="map-content" style="display:none">
+      <div id="map-root"></div>
+    </div>
+
+    <!-- PLAN TAB CONTENT (hidden by default) -->
+    <div id="plan-content">
+
+      <!-- Quote -->
+      <div class="plan-quote-strip anim">
+        <div class="plan-quote-text">&ldquo;For too long our members have been asked to settle for less. I'm asking you to expect more, and know that I intend to deliver it.&rdquo;</div>
+        <div class="plan-quote-attr">&mdash; Ram Selvarajah, No-Slate Blog, Feb 9</div>
+      </div>
+
+      <!-- Principles Carousel -->
+      <div class="plan-section-header anim">
+        <div class="plan-section-tag">Practicing My Promises</div>
+        <h2 class="plan-section-title">Seven Principles</h2>
+        <p class="plan-section-desc">These aren't slogans &mdash; they're commitments this campaign is already living by.</p>
+      </div>
+
+      <div class="principles-grid anim">
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">01</span>
+            <h3 class="principle-title">Measure Before You Move</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Before any reform, we measure what&rsquo;s actually happening. Staff workload, local health, where the money goes, which services are reaching members and which aren&rsquo;t. How many grievances are backlogged? How long is the average member waiting for representation? Which locals are thriving and which are collapsing under caseload? Right now, nobody&rsquo;s tracking this. You can&rsquo;t fix what you refuse to count, and you can&rsquo;t ask members to trust the process when there&rsquo;s no data to back it up.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">02</span>
+            <h3 class="principle-title">Demonstrate, Don&rsquo;t Declare</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>I actively practice what I&rsquo;m promising to do as First VP. Leaders shouldn&rsquo;t need an official role to demonstrate how they show up. The townhalls, the member insight dashboard, the delegate toolkit. All built before winning anything, with a small team and limited resources. That&rsquo;s not a slogan. That&rsquo;s how the office should operate.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">03</span>
+            <h3 class="principle-title">Fix the System Before You Blame the People In It</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>When a local is struggling or a staff member is falling behind, the first question isn&rsquo;t &ldquo;who&rsquo;s failing?&rdquo; It&rsquo;s &ldquo;do you have what you need to do your job?&rdquo; Staff, stewards, local presidents. If the tools are broken, the training is outdated, and the caseloads are unsustainable, that&rsquo;s not a people problem. That&rsquo;s a leadership problem. Fix what&rsquo;s setting people up to fail, then hold everyone to a higher standard.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">04</span>
+            <h3 class="principle-title">Invest in the People Who Do the Work</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Stewards, local presidents, bargaining teams, committee members. These are the people holding the union together at the ground level. They deserve training that&rsquo;s current, relevant to their collective agreement, and built for the fights they&rsquo;re actually in. Not a generic course that hasn&rsquo;t been updated in a decade. Not a video before bargaining. Real investment in the people who show up for members every day.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">05</span>
+            <h3 class="principle-title">Bread and Butter First</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>The union exists to make sure working people have a good standard of living and their rights are protected. Wages, representation, workload, safety. The number one issue members raised across every sector and every region was the same: affordability. Paycheques aren&rsquo;t keeping up. Grievances sit for years. Caseloads are unsustainable. Get the basics right first. Everything else flows from that.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">06</span>
+            <h3 class="principle-title">Accountable to Members, Not to the Board Table</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>The First VP/Treasurer&rsquo;s job is oversight. That means asking hard questions about spending, hiring, and priorities, even when those questions are uncomfortable. If the person in this role owes their seat to the people sitting around that same table, who&rsquo;s actually doing the oversight? Members deserve a First VP who answers to them.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">07</span>
+            <h3 class="principle-title">Two Terms. Then the Next Generation.</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Two terms as First VP/Treasurer. That&rsquo;s it. By the end of that, you&rsquo;ve either delivered on what you promised or you haven&rsquo;t. After that, real succession planning, knowledge transfer, and room for the next generation of leaders to step up. The goal is to build something that outlasts any one person in the role.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Priority Action Items -->
+      <div class="plan-section-header anim">
+        <div class="plan-section-tag">The Roadmap</div>
+        <h2 class="plan-section-title">Priority Action Items</h2>
+        <p class="plan-section-desc">Not vague promises. Not &ldquo;if elected.&rdquo; These are the things that happen first &mdash; because you can't fix what you haven't measured.</p>
+      </div>
+
+      <div class="priority-block anim">
+        <div class="priority-label">&#9673; First 100 Days</div>
+        <ul class="plan-action-list">
+          <li class="plan-action-item"><div class="plan-action-icon">🎤</div><div><strong>Monthly open townhalls with members.</strong> <span class="action-detail">The campaign model, continued from office. Your voice stays in the room, permanently.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">📊</div><div><strong>Commission a staff workload audit.</strong> <span class="action-detail">How many members per rep? What are the backlogs? Where are the gaps? You can&rsquo;t fix what you haven&rsquo;t measured. This is literally the first order of business.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🛠️</div><div><strong>Skills inventory for every staff member.</strong> <span class="action-detail">Starting with one question: do you have what you need to do your job? Support first, then standards.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏥</div><div><strong>Launch a local health assessment.</strong> <span class="action-detail">Every local&rsquo;s structure, resources, and capacity reviewed. If we can see which locals are struggling, we can send support before they collapse.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">💰</div><div><strong>Start the budget process earlier.</strong> <span class="action-detail">Every dollar of member dues should be traceable, defensible, and working harder than it is now. No more lazy across-the-board cuts.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">💻</div><div><strong>Technology audit.</strong> <span class="action-detail">Scope every core system from UnionWare to grievance tracking. IT is my profession. I&rsquo;ll lead this personally.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="priority-block anim">
+        <div class="priority-label secondary">&#9671; Once I Understand the Full Picture</div>
+        <ul class="plan-action-list">
+          <li class="plan-action-item"><div class="plan-action-icon">&#9889;</div><div><strong>Technology modernization.</strong> <span class="action-detail">Real-time membership databases, dashboards for local presidents, board meeting streaming, grievance tracking you can actually use. Scoped and budgeted based on what the audit reveals.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🔀</div><div><strong>Staff restructuring.</strong> <span class="action-detail">If the data supports it &mdash; a dedicated bargaining unit so negotiations get the specialized attention they deserve. Separate bargaining from servicing.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">📚</div><div><strong>Education reform.</strong> <span class="action-detail">OPS and BPS in separate classrooms. President scholarships. CA-specific steward training. Rebuilt college partnerships. Because our stewards shouldn't be going to the table underprepared.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏗️</div><div><strong>Local restructuring.</strong> <span class="action-detail">Where health assessments reveal structural problems &mdash; book-off formulas, composite locals, geographic boundaries. Support first, redesign where needed.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">&#9878;️</div><div><strong>Cross-sector bargaining coordination.</strong> <span class="action-detail">Bring all bargaining team chairs together. Workers facing the same employer shouldn't be isolated &mdash; and COLA belongs in every contract.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏛️</div><div><strong>Political advocacy capacity.</strong> <span class="action-detail">A lobby function within the union. Continuous engagement with government &mdash; strategic instead of reactive. We need to be at the table, not just on the picket line.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🎙️</div><div><strong>Priorities that evolve with what members are actually facing.</strong> <span class="action-detail">Monthly open townhalls, continued from office. Same model as the campaign: show up, listen, document, and let what members are facing shape the priorities as they evolve. Because what&rsquo;s hurting members today won&rsquo;t be the same two years from now.</span></div></li>
+        </ul>
+      </div>
+
+    </div><!-- /plan-content -->
+
+    <!-- ISSUES TAB CONTENT -->
+    <div id="issues-content" style="display:none">
+
+    <!-- CONFIDENCE BLOCK -->
+    <div class="confidence anim">
+      <h2>We asked members: how supported do you feel by your union?</h2>
+      <div class="big-number">
+        <div class="big-number-text">2 out of 3 rated support low</div>
+        <div class="big-number-sub">On a 5-point scale, nearly two-thirds of members rated their union support a 1 or a 2. That's the starting point for everything below.</div>
+      </div>
+      <div class="trust-bar">
+        <div style="width:34.1%;background:var(--warm);color:var(--navy)">34.1%</div>
+        <div style="width:31.8%;background:var(--warm-dark);color:#fff">31.8%</div>
+        <div style="width:18.2%;background:var(--blue);color:#fff">18.2%</div>
+        <div style="width:11.4%;background:var(--navy);color:#fff">11.4%</div>
+        <div style="width:4.5%;background:var(--near-black);color:#fff;font-size:0.55rem">5%</div>
+      </div>
+      <div class="trust-legend">
+        <span><span class="legend-dot" style="background:var(--warm)"></span>1 Not at all</span>
+        <span><span class="legend-dot" style="background:var(--warm-dark)"></span>2 Slightly</span>
+        <span><span class="legend-dot" style="background:var(--blue)"></span>3 Somewhat</span>
+        <span><span class="legend-dot" style="background:var(--navy)"></span>4 Mostly</span>
+        <span><span class="legend-dot" style="background:var(--near-black)"></span>5 Very</span>
+      </div>
+    </div>
+
+    <!-- STAT ROW -->
+    <div class="stat-row anim">
+      <div class="stat-card-primary">
+        <div class="stat-big">7</div>
+        <div>
+          <div class="stat-label">Open sessions over 5 months</div>
+          <p class="stat-desc">Nov 2025 &ndash; Mar 2026. Any member could attend, with messaging intentionally inviting both folks who were skeptical and supportive of Ram.</p>
+          <a href="https://ram4change.ca/rsvp" target="_blank" rel="noopener noreferrer" class="rsvp-btn">RSVP &rarr;</a>
+        </div>
+      </div>
+      <div class="stat-card-secondary">
+        <div class="stat-big">12</div>
+        <div>
+          <div class="stat-label">Issues members kept raising</div>
+          <div class="stat-desc">Not themes we picked. Problems members couldn&rsquo;t stop talking about. We tracked every one.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUOTE CAROUSEL -->
+    <div class="carousel anim" id="carousel">
+      <div class="carousel-bigquote">&ldquo;</div>
+      <div class="carousel-text" id="carousel-text">
+        <!-- filled by JS -->
+      </div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+    <!-- SECTION INTRO -->
+    <div class="section-head anim">
+      <h2>What we heard — and what Ram will do about it</h2>
+      <p>We ran 7 open sessions. 12 specific issues kept coming up. Here they are — ranked by urgency and paired with what Ram plans to do about each one.</p>
+      <p class="tap-hint">Tap any issue to see the full picture — member voices, the plan, and Ram's take.</p>
+      <div class="summary-bar">
+        <div class="summary-pill" data-tier="critical">
+          <span class="dot" style="background:var(--critical)"></span>
+          <span class="count">3</span>
+          <span class="pill-label">Critical</span>
+        </div>
+        <div class="summary-pill" data-tier="high">
+          <span class="dot" style="background:var(--high)"></span>
+          <span class="count">4</span>
+          <span class="pill-label">High Priority</span>
+        </div>
+        <div class="summary-pill" data-tier="recurring">
+          <span class="dot" style="background:var(--recurring)"></span>
+          <span class="count">5</span>
+          <span class="pill-label">Recurring</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISSUE CARDS CONTAINER -->
+    <div id="issues-container"></div>
+
+    <!-- VOICE CTA -->
+    <div class="voice-cta anim">
+      <h3>Have your voice heard.</h3>
+      <p>This mandate is still being built — and it needs your input. Fill out the member survey or register for the next session.</p>
+      <div class="voice-cta-buttons">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe4YyyAJJh1ariaum6mnoBAOOO9E51z6XPu_vriQOObB53Ccg/viewform" target="_blank" rel="noopener noreferrer" class="voice-btn voice-btn-primary">Take the Survey &rarr;</a>
+        <a href="https://ram4change.ca/rsvp" target="_blank" rel="noopener noreferrer" class="voice-btn voice-btn-secondary">RSVP to the Next Session &rarr;</a>
+      </div>
+    </div>
+
+    </div><!-- /issues-content -->
+
+    <!-- METHOD -->
+    <div class="method anim" id="method-section">
+      <button class="method-toggle" id="method-toggle">
+        <span>How this report was built</span>
+        <span class="chevron-btn">&#9662;</span>
+      </button>
+      <div class="method-content">
+        <div class="method-body">
+          <p>This report is built from everything members shared across Ram's town halls: live conversations, Zoom chat, pre-registration comments, and written submissions. All of it is coded the same way, every single time.</p>
+          <p>We didn't just listen to what members said directly — we paid attention to what they implied, what they avoided, and what they only felt safe saying in private. In a union where members describe a climate of fear, the things people don't say out loud matter just as much as the things they do.</p>
+          <p>What you see here are aggregate themes. We do it this way on purpose. It protects member privacy, and it means no one gets to handpick quotes that make them look good. What participants said is kept separate from what Ram said. Same method, every cycle.</p>
+          <p>Our town halls run between 1.5 and 2 hours and have drawn diverse membership across regions, divisions, and sectors. Each issue on this page was independently raised by members — not prompted, not led. We tracked which sessions each issue appeared in, and flagged the ones that came up in every single one.</p>
+          <p>The range is real, the signal is strong, and if Ram is elected, you can count on this kind of member-driven listening extending beyond a campaign — into bargaining, budgets, and how leadership reports back to you.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Ram4Change</span>
+      <span style="opacity:0.4">&middot;</span>
+      <span>Member Voice Report</span>
+      <span style="opacity:0.4">&middot;</span>
+      <span>Last Updated March 2026</span>
+      <span style="opacity:0.4">&middot;</span>
+      <span>Designed by <a href="https://www.groupproject.ca" target="_blank" rel="noopener noreferrer">Group Project Initiatives</a></span>
+    </div>
+  </footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════ */
+
+const QUOTES = [
+  { text: "I'm drowning. My members are drowning. And every time I call for a lifeline, I get a voicemail.", speaker: "Local president" },
+  { text: "Don't play dirty politics in the boardroom at the cost of our members' welfare and services.", speaker: "Member, Feb 2026" },
+  { text: "I can't afford to volunteer for the union. I can't afford convention. I'm choosing between groceries and gas. And you want me to be engaged?", speaker: "Member, Feb 2026" },
+  { text: "Nobody told me there was a union card. Nobody told me I could get involved. I found out by accident.", speaker: "Steward" },
+  { text: "I support you. But I can't like your post. I can't be seen. The culture at OPSEU right now is terrifying.", speaker: "Member, Feb 2026" },
+  { text: "Way too much money is wasted on inefficient projects and wasteful costly resources. Where is that accountability?", speaker: "Member, Jan 2026" },
+  { text: "A good percentage of OPSEU members live below the poverty line. This isn't abstract. This is our membership.", speaker: "Member submission" },
+  { text: "Members in my sector are talking about petitioning to leave OPSEU. That's how unsupported they feel.", speaker: "Member submission" },
+];
+
+const ISSUES = [
+  {
+    title: "Staff Rep Workload & Availability",
+    freq: 25, townhalls: "Every session", icon: "🔥",
+    urgency: "critical", urgencyLabel: "Critical",
+    headline: "You call for help. You get a voicemail. You call again. Nothing.",
+    faceQuote: "Until now, we don't get any support... we don't know anything. One staff rep assigned to two of the largest colleges, little to no support from OPSEU.",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    // Heat data: approximate per-session intensity (out of max ~6 per session for this issue)
+    heat: [4, 4, 5, 5, 5, 2, 5], // Nov, Dec, Jan, Feb12, Feb24, PreReg, Mar
+    memberVoice: "Members across every session described staff reps who are unavailable, burned out, on leave, or juggling too many locals. Some locals have cycled through 3–6 staff reps in a single year. When a rep is in bargaining, there's no backup. When they leave, there's no knowledge transfer. One member noted that some staff rep bundles include 16 locals — and with 60%+ of locals in some form of bargaining, the math simply doesn't work.",
+    plan: "Commission a proper workload audit of all staff positions. Establish measurable staff-to-member ratios. Separate bargaining and servicing functions — staff reps negotiating contracts shouldn't simultaneously be the only lifeline for members with active grievances. Implement knowledge transfer protocols when staff change assignments. Create a feedback mechanism so local presidents can flag gaps in real time.",
+    ramTake: "I've asked OPSEU administration for a workload assessment and a staff-to-member ratio — and I've been unable to get an answer. That tells you everything. As First VP, the first order of business is measuring the problem we've been ignoring.",
+  },
+  {
+    title: "Local Support & Restructuring",
+    freq: 22, townhalls: "Every session", icon: "🏗️",
+    urgency: "critical", urgencyLabel: "Critical",
+    headline: "Local presidents are running their locals off the side of their desks.",
+    faceQuote: "Our archaic book-off formula needs to be reevaluated for its effectiveness — it's inherently biased.",
+    faceQuoteSpeaker: "Local president, Dec 2025",
+    heat: [4, 3, 4, 5, 5, 1, 4],
+    memberVoice: "Local presidents say they're running their locals off the side of their desks. The book-off formula is outdated and doesn't account for geography, sector diversity, or the real demands on local leaders. Composite locals with vastly different bargaining units are tearing themselves apart. Northern locals with massive geographic territories will never meet the numbers-based thresholds.",
+    plan: "Comprehensive local health check — every local's structure, resources, and capacity reviewed. Revisit the book-off formula to reflect geography, sector diversity, and real workload. Build a 'local health' early warning system where signs of struggle trigger support, not punishment.",
+    ramTake: "Every local should get a health check — structure, resources, capacity. And when a local is struggling, the response should be support, not punishment. We need to flip that instinct.",
+  },
+  {
+    title: "Wages & Cost-of-Living Adjustments",
+    freq: 9, townhalls: "5 of 7 sessions", icon: "📉",
+    urgency: "critical", urgencyLabel: "Critical",
+    headline: "We're earning 1995 wages in a 2026 economy.",
+    faceQuote: "We're actually earning circa 1995 wages, in terms of real wages vis-a-vis inflation and productivity.",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    heat: [2, 1, 2, 3, 2, 1, 3],
+    memberVoice: "Real wages haven't kept up with inflation since approximately 2012 — in purchasing power terms, members are earning circa-1995 wages. BPS workers in sectors like Dynacare and developmental services are barely above minimum wage.",
+    plan: "Cost-of-living adjustments in every contract. Ensure bargaining teams have the data and resources to fight for real gains. Synchronize industry-level bargaining where possible.",
+    ramTake: "I sit on the OPTrust board. Somebody who retired 10, 15 years ago is now making the same level of wages as someone who's working today — because their pension kept up with inflation. Active workers deserve the same. Cost-of-living adjustments in every contract — that's not aspirational, that's a baseline. Workers facing the same employer should be coordinated, not isolated.",
+  },
+  {
+    title: "Financial Transparency & Budget Accountability",
+    freq: 18, townhalls: "Every session", icon: "💰",
+    urgency: "high", urgencyLabel: "High Priority",
+    headline: "Members want to see where their dues go. They're not getting answers.",
+    faceQuote: "Way too much money is wasted on inefficient projects and wasteful costly resources.",
+    faceQuoteSpeaker: "Member, Jan 2026",
+    heat: [3, 3, 4, 5, 5, 2, 4],
+    memberVoice: "Members want to see where their dues go. The budget process feels opaque, top-heavy, and disconnected from local needs. A $300K election summit that could have been virtual — $250K redirected to education. A $160K racialized workers summit. A 4.5% across-the-board cut described as lazy budgeting. Board members' corporate cards that aren't being reconciled monthly — while a member who paid $400 out of pocket for a Chelsea Hotel stay still hasn't been reimbursed since October.",
+    plan: "Every resolution with financial implications gets a value-for-money assessment. Monthly reconciliation of all corporate cards — if it's not reconciled, you can't spend. Start the budget process earlier so members have real input. Full campaign finance transparency.",
+    ramTake: "I've been VP of OPTrust and CFO of three companies. I know what financial accountability looks like. I also completed audits of two locals whose reports sat in someone's inbox for two years because they implicated senior officials. Every dollar of member dues should be traceable, defensible, and working harder than it is now.",
+    practicing: ["Ram committed to publishing how every campaign dollar fundraised from locals was spent — full transparency, at the end of this campaign. No other candidate has made that commitment.", "As Vice Chair of OPTrust, he oversees the billions in YOUR pension fund. The accountability standards he's proposing for OPSEU are the ones he already works under."],
+  },
+  {
+    title: "Technology Modernization",
+    freq: 16, townhalls: "5 of 7 sessions", icon: "💻",
+    urgency: "high", urgencyLabel: "High Priority",
+    headline: "The systems are stuck in 2005 — and members are paying the price.",
+    faceQuote: "The software is very archaic. There's currently a wait list for members to have a Benefits Officer review their claim.",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    heat: [3, 3, 3, 4, 2, 0, 3],
+    memberVoice: "The cyber attack came up repeatedly as a symbol of how fragile and outdated the union's tech infrastructure is. UnionWare is archaic. Campaign and membership data don't sync. Local presidents can't access their own membership lists. There's no centralized system for tracking grievances, staff workload, or board performance.",
+    plan: "Full technology modernization: replace or upgrade UnionWare, build a real-time membership database local presidents can actually access, create dashboards for key metrics, and sync campaign and membership data.",
+    ramTake: "IT is my profession. I know this space. When our members got hit by the cyber attack, I offered OPS IT cybersecurity expertise — OPSEU said no. Look at what we built with this campaign on a fraction of the budget: multilingual tools, interactive data, real-time booking. That's the proof that modernization is possible. IT and information is the backbone of any organization — we need to invest in it, not treat it as an afterthought while the whole system crumbles.",
+    practicing: ["This campaign website — multilingual, interactive, data-driven, with real-time booking — was built on a fraction of what OPSEU spends on a single conference.", "The Member Voice Report you're reading right now is the dashboard Ram wants to build for the union — member data, visualized, accessible, updated in real time.", "A Delegate Toolkit was built and published for every member — regardless of who they're voting for. It should have existed long before a campaign had to build it."],
+  },
+  {
+    title: "Board Division & Toxic Culture",
+    freq: 14, townhalls: "5 of 7 sessions", icon: "⚠️",
+    urgency: "high", urgencyLabel: "High Priority",
+    headline: "There's a climate of fear — and members know it.",
+    faceQuote: "Don't play dirty politics in the boardroom at the cost of our members' welfare and services.",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    heat: [2, 3, 3, 3, 3, 0, 3],
+    memberVoice: "Members describe the Executive Board as divided into factions, with WhatsApp side-chats undermining meetings, performative politics replacing policy debate, and a climate where supporting the 'wrong' candidate can have professional consequences. Members privately message support but won't like posts publicly.",
+    plan: "Culture reset focused on mission-driven governance. Every board decision evaluated against member impact. Side-chats addressed head-on. No-slate approach — Ram is running independently because slates create the us-versus-them factionalism members are describing. Two-term commitment — build, deliver, and hand it over rather than accumulating power.",
+    ramTake: "I'm completely opposed to running as a slate, because then we become a political us-versus-them mentality. Put away those cell phones and WhatsApp chats that are separate from the discussion happening at the board. I do not intend to stay beyond two terms — build it, prove it works, and move on. You can lead from any chair — but only if the culture lets people lead honestly.",
+    practicing: ["Ram was asked to run as a slate. He said no — explaining in a post that his loyalty is to members, not a running mate.", "He attended all three presidential candidates' townhalls and committed to working with any president. Independent governance, not factional loyalty.", "He chose not to publish photos from his own campaign event because attendees might face retaliation. The climate of fear isn't abstract to this campaign — it shaped how the campaign operates."],
+  },
+  {
+    title: "Member Engagement & Organizing Model",
+    freq: 14, townhalls: "Every session", icon: "📢",
+    urgency: "high", urgencyLabel: "High Priority",
+    headline: "Members aren't apathetic. They're just not being asked.",
+    faceQuote: "The OPS is in dire straits, with approximately 30% of members engaged. And yet, the Exec Board voted against extending the mobilizers who were actually working — with no backup plan.",
+    faceQuoteSpeaker: "Member, Jan 2026",
+    heat: [3, 3, 3, 3, 2, 1, 3],
+    memberVoice: "Members see OPSEU as a service provider, not their union. Engagement is estimated at 30% in some areas. The shift from organizing to servicing has eroded grassroots power. New members have no idea what the union does — many don't even know their union card exists.",
+    plan: "Rebuild engagement by rebuilding locals — empower stewards, protect them, make them feel backed. Measure engagement through local health metrics and participation data. Create feedback loops so the board knows what's happening on the ground.",
+    ramTake: "My entire approach is the answer to this: townhalls open to all members, cross-sector, where I listen first and build the agenda from what members say. Rebuilding engagement starts with actually showing up and asking.",
+  },
+  {
+    title: "Young Worker Inclusion & Mentorship",
+    freq: 12, townhalls: "5 of 7 sessions", icon: "🌱",
+    urgency: "recurring", urgencyLabel: "Recurring",
+    headline: "Young workers have energy. The union has a door that's closed.",
+    faceQuote: "As a young worker myself, I just knew I was paying dues. I didn't know who was involved or how I can get involved.",
+    faceQuoteSpeaker: "Provincial Young Workers rep, Dec 2025",
+    heat: [2, 3, 2, 2, 2, 1, 2],
+    memberVoice: "Young workers describe feeling shut out by seniority culture. They don't know how to get involved, aren't told about opportunities, and can't afford to attend conventions or training. They bring exactly what the union needs: energy, social media skills, and willingness to organize.",
+    plan: "Barrier reduction: subsidized convention attendance, mentorship programs pairing retirees with new workers, dedicated space for young workers on committees and in education.",
+    ramTake: "I personally nominated the Provincial Young Workers rep who spoke at our townhall. That's not a talking point — that's a track record. We need to be opening doors, not waiting for people to knock.",
+  },
+  {
+    title: "Education & Training Reform",
+    freq: 11, townhalls: "5 of 7 sessions", icon: "📚",
+    urgency: "recurring", urgencyLabel: "Recurring",
+    headline: "Stewards are being sent into fights they haven't been trained for.",
+    faceQuote: "My stewards are returning after training saying we didn't learn anything.",
+    faceQuoteSpeaker: "Local president, Jan 2026",
+    heat: [2, 2, 3, 3, 2, 0, 2],
+    memberVoice: "Training is too generic — OPS and BPS lumped into the same classroom despite completely different collective agreements. Stewards return saying they didn't learn anything relevant. Meanwhile, they're facing off against employer reps whose full-time job is knowing the CA.",
+    plan: "Split OPS and BPS educationals where appropriate. CA-specific, customized training delivered by staff reps who know the unit. Every new collective agreement followed by mandatory education.",
+    ramTake: "Every new collective agreement should be followed by mandatory education for every affected steward. Our strength is in our educated members — but right now we're not giving them the tools.",
+  },
+  {
+    title: "Hiring Transparency & Accountability",
+    freq: 10, townhalls: "3 of 7 sessions", icon: "🔍",
+    urgency: "recurring", urgencyLabel: "Recurring",
+    headline: "Members want fair, merit-based hiring — not favours.",
+    faceQuote: "Fair, transparent, and skill-based hiring — not loaded like a reward. Real equity.",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    heat: [0, 0, 2, 3, 3, 2, 2],
+    memberVoice: "Members feel OPSEU's staff hiring is opaque, with perceptions of nepotism cutting across every identity group. MDT program graduates don't always get a chance at temporary staff positions, and there's no clear merit-based process visible to members.",
+    plan: "Published criteria, open competitions, evaluation feedback, and genuine enforcement of the constitutional preference for hiring from membership.",
+    ramTake: "Ask any OPSEU member if all members deserve equal opportunity — they'd say yes. The problem isn't the principle. It's that it feels like we've substituted tokenized roles and performative statements for actual policy change, public education, and long-term strategy. I wrote the test twice, passed it, and never got a call for the interview. I asked for feedback — crickets. That's not an isolated experience. This issue is the reason I'm running.",
+  },
+  {
+    title: "Financial Misconduct & Accountability Gaps",
+    freq: 8, townhalls: "3 of 7 sessions", icon: "⚖️",
+    urgency: "recurring", urgencyLabel: "Recurring",
+    headline: "When money goes missing, the systems that should catch it aren't there.",
+    faceQuote: "When money goes missing and the systems that should have caught it weren't there — members want resolution, not perpetual litigation. But if there are no real consequences, what does that tell the next person?",
+    faceQuoteSpeaker: "Member, Feb 2026",
+    heat: [0, 2, 0, 3, 2, 1, 3],
+    memberVoice: "Ongoing legal disputes tied to past leadership came up in multiple sessions. Members are divided — some want justice and full recovery of funds, others worry the legal costs are outpacing what will be recovered. A case involving a local president misappropriating over $120,000 was raised as part of a broader pattern: when money goes missing, the systems that should have caught it weren't there.",
+    plan: "Pursue accountability through appropriate legal channels. More importantly, build the financial controls, audit processes, and oversight systems that prevent misuse of member funds — not just respond to it after the damage is done. And actively rebuild trust with members by showing them the union takes this seriously — not through press releases, but through real structural change they can see and verify.",
+    ramTake: "Justice matters. But the bigger lesson is that we need systems that catch problems before they become scandals. We can't keep being reactive — we need real financial controls baked into how this union operates. Members need to trust that their dues are protected. That trust has to be earned back — and that starts with transparency, not talking points.",
+  },
+  {
+    title: "Retirees as a Resource",
+    freq: 7, townhalls: "3 of 7 sessions", icon: "🤝",
+    urgency: "recurring", urgencyLabel: "Recurring",
+    headline: "Decades of knowledge, willing to help — and we're not asking.",
+    faceQuote: "We pretty much feel like old furniture that's stored in a room and only pulled out when someone needs a chair.",
+    faceQuoteSpeaker: "Retiree member, Nov 2025",
+    heat: [2, 2, 0, 1, 2, 0, 2],
+    memberVoice: "Retirees represent a massive, untapped resource. They carry decades of institutional knowledge, are willing to mentor, and want to stay involved. At only $10 for a lifetime retiree membership, locals are leaving value on the table.",
+    plan: "Formalize the role of retirees: as educators, mentors, and honorary LEC members. Locals should budget for retiree engagement and actively recruit retiring members before they disengage.",
+    ramTake: "Retiree involvement bridges two problems at once — knowledge transfer and local capacity. A $10 lifetime membership and decades of experience? That's the best investment in the union.",
+  }
+];
+
+const TIERS = [
+  { key: "critical", label: "Critical", color: "var(--critical)", issues: [] },
+  { key: "high", label: "High Priority", color: "var(--high)", issues: [] },
+  { key: "recurring", label: "Recurring", color: "var(--recurring)", issues: [] },
+];
+
+// Group issues into tiers
+ISSUES.forEach(issue => {
+  const tier = TIERS.find(t => t.key === issue.urgency);
+  if (tier) tier.issues.push(issue);
+});
+
+const SESSION_LABELS = ["Nov", "Dec", "Jan", "Feb 12", "Feb 24", "Pre-Reg", "Mar"];
+
+/* ═══════════════════════════════════════════
+   CAROUSEL
+   ═══════════════════════════════════════════ */
+
+let currentQuote = 0;
+const carouselText = document.getElementById('carousel-text');
+const carouselDots = document.getElementById('carousel-dots');
+
+function renderQuote(idx) {
+  const q = QUOTES[idx];
+  carouselText.innerHTML = `<p>&ldquo;${q.text}&rdquo;</p><cite>&mdash; ${q.speaker}</cite>`;
+  carouselText.classList.remove('fade-in');
+  void carouselText.offsetWidth;
+  carouselText.classList.add('fade-in');
+  renderDots(idx);
+}
+
+function renderDots(active) {
+  carouselDots.innerHTML = QUOTES.map((_, i) =>
+    `<button class="carousel-dot ${i === active ? 'active' : ''}" data-idx="${i}"></button>`
+  ).join('');
+  carouselDots.querySelectorAll('.carousel-dot').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentQuote = parseInt(btn.dataset.idx);
+      renderQuote(currentQuote);
+    });
+  });
+}
+
+renderQuote(0);
+setInterval(() => {
+  currentQuote = (currentQuote + 1) % QUOTES.length;
+  renderQuote(currentQuote);
+}, 6000);
+
+/* ═══════════════════════════════════════════
+   HEAT STRIPE HELPER
+   ═══════════════════════════════════════════ */
+
+function heatColor(val, urgencyColor) {
+  if (val === 0) return 'rgba(15,34,78,0.05)';
+  const opacity = 0.2 + (val / 5) * 0.8;
+  // Use navy for heat
+  return `rgba(15,34,78,${opacity})`;
+}
+
+/* ═══════════════════════════════════════════
+   RENDER ISSUE CARDS
+   ═══════════════════════════════════════════ */
+
+const container = document.getElementById('issues-container');
+let expandedId = null;
+
+function urgencyColor(key) {
+  const map = { critical: 'var(--critical)', high: 'var(--high)', recurring: 'var(--recurring)', watching: 'var(--watching)', opportunity: 'var(--opportunity)' };
+  return map[key] || 'var(--muted)';
+}
+
+function renderIssues() {
+  let html = '';
+  TIERS.forEach(tier => {
+    if (tier.issues.length === 0) return;
+    html += `
+      <div class="tier-header anim" id="tier-${tier.key}">
+        <span class="tier-badge ${tier.key}">${tier.label}</span>
+        <span class="tier-count">${tier.issues.length} issue${tier.issues.length > 1 ? 's' : ''}</span>
+      </div>
+    `;
+    html += `<div class="issue-grid">`;
+    tier.issues.forEach((issue, idx) => {
+      const id = `${tier.key}-${idx}`;
+      const isExpanded = expandedId === id;
+      html += `
+        <div class="issue-card anim ${isExpanded ? 'expanded' : ''}" data-id="${id}">
+          <div class="issue-face">
+            <div class="issue-top-row">
+              <div style="flex:1">
+                <div class="issue-meta">
+                  <span class="issue-icon">${issue.icon}</span>
+                  <span class="issue-title-label">${issue.title}</span>
+                  <span class="issue-urgency-pill" style="background:${urgencyColor(issue.urgency)}">${issue.urgencyLabel}</span>
+                </div>
+                <h3 class="issue-headline">${issue.headline}</h3>
+                <p class="issue-quote-face">&ldquo;${issue.faceQuote}&rdquo; <span style="font-style:normal;font-weight:600;font-size:0.75rem;color:var(--muted)">&mdash; ${issue.faceQuoteSpeaker}</span></p>
+                <div class="issue-data-row">
+                  <div class="freq-badge">
+                    <span class="label" style="font-size:0.72rem;color:var(--navy);font-weight:700">${issue.townhalls}</span>
+                  </div>
+                </div>
+              </div>
+              <button class="chevron-btn" aria-label="Expand">&#9662;</button>
+            </div>
+          </div>
+          <div class="issue-expand">
+            <div class="expand-section-label" style="color:var(--navy)">What members are saying</div>
+            <p class="expand-text">${issue.memberVoice}</p>
+
+            <div class="plan-block">
+              <div class="expand-section-label" style="color:var(--navy)">What needs to change</div>
+              <p>${issue.plan}</p>
+            </div>
+
+            ${issue.practicing ? `<div class="practice-block">
+              <div class="expand-section-label">Practicing my promises</div>
+              <ul>${issue.practicing.map(p => `<li>${p}</li>`).join('')}</ul>
+            </div>` : ''}
+
+            <div class="ram-block">
+              <div class="expand-section-label">Ram's take</div>
+              <p>&ldquo;${issue.ramTake}&rdquo;</p>
+              <cite>&mdash; Ram Selvarajah</cite>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`; /* close .issue-grid */
+  });
+  container.innerHTML = html;
+
+  // Attach click handlers
+  container.querySelectorAll('.issue-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      expandedId = expandedId === id ? null : id;
+      // Toggle classes
+      container.querySelectorAll('.issue-card').forEach(c => {
+        c.classList.toggle('expanded', c.dataset.id === expandedId);
+      });
+    });
+  });
+
+  // Re-trigger animation observer
+  observeAnimations();
+}
+
+renderIssues();
+
+/* ═══════════════════════════════════════════
+   METHOD TOGGLE
+   ═══════════════════════════════════════════ */
+
+document.getElementById('method-toggle').addEventListener('click', () => {
+  document.getElementById('method-section').classList.toggle('open');
+});
+
+/* ═══════════════════════════════════════════
+   VIEW TABS
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('.view-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const view = btn.dataset.view;
+    document.querySelectorAll('.view-tab').forEach(b => b.classList.toggle('active', b === btn));
+    document.getElementById('map-content').style.display = view === 'map' ? 'block' : 'none';
+    document.getElementById('issues-content').style.display = view === 'issues' ? 'block' : 'none';
+    document.getElementById('plan-content').style.display = view === 'plan' ? 'block' : 'none';
+    // Re-trigger animations for newly visible content
+    observeAnimations();
+
+  });
+});
+
+/* ═══════════════════════════════════════════
+   UTILITY NAV TAB LINKS
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('.utility-tab-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetView = link.dataset.targetView;
+    // Activate the matching tab button
+    const matchingTab = document.querySelector('.view-tab[data-view="' + targetView + '"]');
+    if (matchingTab) {
+      matchingTab.click();
+      // Scroll the tabs area into view
+      setTimeout(() => {
+        matchingTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════
+   SUMMARY PILL ANCHORS
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('.summary-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const tierKey = pill.dataset.tier;
+    const tierEl = document.getElementById('tier-' + tierKey);
+    if (tierEl) {
+      tierEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════
+   PLAN CAROUSEL
+   ═══════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════
+   PRINCIPLE CARDS EXPAND/COLLAPSE
+   ═══════════════════════════════════════════ */
+
+document.querySelectorAll('[data-principle]').forEach(card => {
+  card.addEventListener('click', () => {
+    const wasOpen = card.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('[data-principle].open').forEach(c => c.classList.remove('open'));
+    // Toggle clicked
+    if (!wasOpen) card.classList.add('open');
+  });
+});
+
+/* ═══════════════════════════════════════════
+   SCROLL ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+function observeAnimations() {
+  /* When embedded in an iframe, IntersectionObserver often can't detect
+     scroll position because the parent page controls scrolling.
+     Detect iframe context and skip animation — show everything. */
+  const inIframe = window.self !== window.top;
+  if (inIframe) {
+    document.querySelectorAll('.anim:not(.visible)').forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.anim:not(.visible)').forEach(el => observer.observe(el));
+}
+
+observeAnimations();
+
+</script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+const SECTOR_COLORS = {
+  "Corrections": { bg: "rgba(220,166,148,0.20)", text: "#dca694" },
+  "Healthcare": { bg: "rgba(62,81,132,0.16)", text: "#3e5184" },
+  "Education": { bg: "rgba(15,34,78,0.14)", text: "#0f224e" },
+  "Justice/MAG": { bg: "rgba(87,75,79,0.16)", text: "#574b4f" },
+  "OPS": { bg: "rgba(62,81,132,0.16)", text: "#3e5184" },
+  "Dev. Services": { bg: "rgba(62,81,132,0.14)", text: "#3e5184" },
+  "Mental Health": { bg: "rgba(220,166,148,0.18)", text: "#dca694" },
+  "Children/Youth": { bg: "rgba(87,75,79,0.14)", text: "#574b4f" },
+  "Long-Term Care": { bg: "rgba(62,81,132,0.14)", text: "#3e5184" },
+  "Community Services": { bg: "rgba(87,75,79,0.14)", text: "#574b4f" },
+  "Municipalities": { bg: "rgba(87,75,79,0.18)", text: "#574b4f" },
+  "Property Assessment": { bg: "rgba(62,81,132,0.16)", text: "#3e5184" },
+  "Natural Resources": { bg: "rgba(62,81,132,0.14)", text: "#3e5184" },
+  "LCBO/LTB": { bg: "rgba(220,166,148,0.18)", text: "#dca694" },
+  "Retiree": { bg: "rgba(87,75,79,0.16)", text: "#574b4f" },
+  "Union Leadership": { bg: "rgba(15,34,78,0.14)", text: "#0f224e" },
+  "Other BPS": { bg: "rgba(62,81,132,0.14)", text: "#3e5184" },
+};
+
+const LEGACY_REGION_DATA = {
+  1: {
+    subtitle: "Southwestern Ontario · Windsor · London · Sarnia · Chatham",
+    locals: [
+      { num: "106", sector: "Healthcare", role: "Hospital Professional" },
+      { num: "123", sector: "Justice/MAG", role: "Court Services" },
+      { num: "154", sector: "OPS", role: "OPS Unified" },
+      { num: "162", sector: "Education", role: "LBED" },
+    ],
+    sectors: ["Justice/MAG", "Healthcare", "OPS", "Education"],
+  },
+  2: {
+    subtitle: "South-Central / Niagara Corridor · Guelph · Hamilton · Niagara · Owen Sound",
+    locals: [
+      { num: "2100", sector: "Education", role: "Educator" },
+      { num: "2103", sector: "Education", role: "Board of Ed" },
+      { num: "217", sector: "Municipalities", role: "Electrician" },
+      { num: "221", sector: "Justice/MAG", role: "Legal Admin" },
+      { num: "223", sector: "OPS", role: "Ministry of Ed" },
+      { num: "224", sector: "OPS", role: "SAIU Caseworker" },
+      { num: "241", sector: "Education", role: "College Co-op" },
+      { num: "258", sector: "Children/Youth", role: "CAS" },
+      { num: "261", sector: "Long-Term Care", role: "PSW" },
+      { num: "269", sector: "Community Services", role: "Social Worker" },
+      { num: "281", sector: "Long-Term Care", role: "Sector 8" },
+      { num: "284", sector: "Education", role: "LBED" },
+    ],
+    sectors: ["Education", "Long-Term Care", "Children/Youth", "Justice/MAG", "OPS", "Municipalities", "Community Services"],
+  },
+  3: {
+    subtitle: "Central Ontario & Kawarthas · Oshawa · Orillia · Peterborough · Midland",
+    locals: [
+      { num: "312", sector: "Property Assessment", role: "Sector 16" },
+      { num: "340", sector: "OPS", role: "OPS Unified" },
+      { num: "348", sector: "Healthcare", role: "Hospital / MLT" },
+      { num: "365", sector: "Education", role: "University" },
+      { num: "367", sector: "Healthcare", role: "Lab / HPD" },
+      { num: "377", sector: "Education", role: "LBED" },
+      { num: "383", sector: "Healthcare", role: "Hospital OTA/PTA" },
+      { num: "386", sector: "Dev. Services", role: "Dev. Services" },
+    ],
+    sectors: ["Healthcare", "Education", "OPS", "Property Assessment", "Dev. Services"],
+  },
+  4: {
+    subtitle: "Eastern Ontario & National Capital Region · Ottawa · Kingston · Brockville",
+    locals: [
+      { num: "410", sector: "OPS", role: "OPS" },
+      { num: "424", sector: "Corrections", role: "Corrections" },
+      { num: "434", sector: "Dev. Services", role: "DSW" },
+      { num: "439", sector: "Mental Health", role: "Mental Health" },
+      { num: "455", sector: "OPS", role: "OPS Unified" },
+      { num: "460", sector: "Children/Youth", role: "Children's MH" },
+      { num: "494", sector: "Municipalities", role: "Case Manager" },
+    ],
+    sectors: ["OPS", "Mental Health", "Corrections", "Dev. Services", "Children/Youth", "Municipalities"],
+  },
+  5: {
+    subtitle: "Greater Toronto Area & Provincial HQ · Toronto · Mississauga · Brampton",
+    locals: [
+      { num: "526", sector: "Justice/MAG", role: "Court Clerk / MAG" },
+      { num: "542", sector: "OPS", role: "MTO / OPS" },
+      { num: "546", sector: "OPS", role: "Elevator Safety" },
+      { num: "548", sector: "Mental Health", role: "Mental Health" },
+      { num: "550", sector: "Dev. Services", role: "Dev. Services" },
+      { num: "559", sector: "Education", role: "CAAT Support" },
+      { num: "563", sector: "Education", role: "Financial Aid" },
+      { num: "575", sector: "Healthcare", role: "HPD" },
+      { num: "579", sector: "OPS", role: "Sol Gen" },
+      { num: "582", sector: "Corrections", role: "Corrections" },
+      { num: "584", sector: "OPS", role: "OCWA / Water" },
+      { num: "585", sector: "OPS", role: "OHS Inspector" },
+      { num: "587", sector: "Healthcare", role: "Healthcare BPS" },
+      { num: "594", sector: "Community Services", role: "Non-Profit" },
+    ],
+    sectors: ["OPS", "Justice/MAG", "Education", "Healthcare", "Corrections", "Dev. Services", "Mental Health", "Community Services"],
+  },
+  6: {
+    subtitle: "Northeastern Ontario & Algoma · Sudbury · North Bay · Timmins · Sault Ste. Marie",
+    locals: [
+      { num: "617", sector: "Corrections", role: "Corrections" },
+      { num: "632", sector: "OPS", role: "MMAH" },
+      { num: "642", sector: "Corrections", role: "Duty Officer" },
+      { num: "649", sector: "OPS", role: "OPS" },
+      { num: "652", sector: "OPS", role: "OPS" },
+      { num: "665", sector: "Children/Youth", role: "Child Protection" },
+    ],
+    sectors: ["OPS", "Corrections", "Children/Youth"],
+  },
+  7: {
+    subtitle: "Northwestern Ontario · Thunder Bay · Kenora · Dryden · Fort Frances",
+    locals: [
+      { num: "708", sector: "Corrections", role: "Corrections" },
+      { num: "710", sector: "Justice/MAG", role: "MAG" },
+      { num: "713", sector: "Natural Resources", role: "MNR / AFFES" },
+      { num: "715", sector: "Healthcare", role: "HPD" },
+      { num: "736", sector: "OPS", role: "OPS" },
+      { num: "740", sector: "Dev. Services", role: "DS Support" },
+    ],
+    sectors: ["Corrections", "Justice/MAG", "Healthcare", "Natural Resources", "OPS", "Dev. Services"],
+  },
+};
+
+const ATTENDANCE_CSV_PATHS = [
+  "https://oncanadaproject.github.io/ram4change/Final%20r4c%20Attendance%20in%20Townhalls%20Region%20and%20Sector%20and%20Potential%20Employer%20and%20local%20number%20.csv",
+];
+
+const REGION_COPY_CSV_PATHS = [
+  "https://oncanadaproject.github.io/ram4change/Final%20Geographic%20Description%20and%20Blurb%20and%20Hyperlinked%20Question%20per%20OPSEU%20Region%20r4c.csv",
+];
+
+const BRAND = {
+  navy: "#0f224e",
+  indigo: "#3e5184",
+  page: "#e8ecf0",
+  peach: "#dca694",
+  night: "#0a0e18",
+  taupe: "#574b4f",
+  line: "#cdd5df",
+};
+
+const REGION_SUBTITLES = {
+  1: "Southwestern Ontario · Windsor · London · Sarnia · Chatham",
+  2: "South-Central / Niagara Corridor · Guelph · Hamilton · Niagara · Owen Sound",
+  3: "Central Ontario & Kawarthas · Oshawa · Orillia · Peterborough · Midland",
+  4: "Eastern Ontario & National Capital Region · Ottawa · Kingston · Brockville",
+  5: "Greater Toronto Area & Provincial HQ · Toronto · Mississauga · Brampton",
+  6: "Northeastern Ontario & Algoma · Sudbury · North Bay · Timmins · Sault Ste. Marie",
+  7: "Northwestern Ontario · Thunder Bay · Kenora · Dryden · Fort Frances",
+};
+
+const LOCAL_EMPLOYER_HINTS = {
+  "241": ["Mohawk College"],
+  "348": ["Lakeridge Health"],
+  "365": ["Trent University"],
+  "383": ["Orillia Soldiers' Memorial Hospital"],
+  "500": ["Centre for Addiction and Mental Health (CAMH)"],
+  "558": ["Centennial College"],
+  "559": ["Centennial College"],
+  "563": ["Humber College"],
+  "613": ["Sault College"],
+};
+
+function cleanEmployerValue(value) {
+  return (value || "").replace(/\s+/g, " ").replace(/[.]+$/g, "").trim();
+}
+
+function splitPotentialEmployers(rawText) {
+  if (!rawText) return [];
+  return rawText
+    .replace(/\band\/or\b/gi, ",")
+    .split(/[;,|]+/g)
+    .map((entry) => cleanEmployerValue(entry))
+    .filter((entry) => entry && entry !== "." && entry.toLowerCase() !== "n/a");
+}
+
+function inferPotentialEmployers({ local, role, sector, division }) {
+  const inferred = new Set();
+  const text = `${role || ""} ${sector || ""} ${division || ""}`.toLowerCase();
+
+  if (LOCAL_EMPLOYER_HINTS[local]) {
+    LOCAL_EMPLOYER_HINTS[local].forEach((name) => inferred.add(name));
+  }
+  if (text.includes("court") || text.includes("mag") || text.includes("justice")) {
+    inferred.add("Ministry of the Attorney General");
+  }
+  if (text.includes("correction")) {
+    inferred.add("Ministry of the Solicitor General");
+  }
+  if (text.includes("ops") || text.includes("ontario public service")) {
+    inferred.add("Ontario Public Service ministries and agencies");
+  }
+  if (text.includes("mto") || text.includes("transportation")) {
+    inferred.add("Ministry of Transportation of Ontario");
+  }
+  if (text.includes("mccss")) {
+    inferred.add("Ministry of Children, Community and Social Services");
+  }
+  if (text.includes("mmah")) {
+    inferred.add("Ministry of Municipal Affairs and Housing");
+  }
+  if (text.includes("mnr") || text.includes("affes") || text.includes("natural resources")) {
+    inferred.add("Ministry of Natural Resources / AFFES");
+  }
+  if (text.includes("hospital") || text.includes("hpd") || text.includes("healthcare")) {
+    inferred.add("Public hospitals and healthcare employers");
+  }
+  if (text.includes("mental health")) {
+    inferred.add("Mental health organizations and hospitals");
+  }
+  if (text.includes("children's aid") || text.includes("child welfare") || text.includes("child protection")) {
+    inferred.add("Children's Aid Societies");
+  }
+  if (text.includes("long term care")) {
+    inferred.add("Long-term care homes");
+  }
+  if (text.includes("municipal")) {
+    inferred.add("Municipal governments");
+  }
+  if (text.includes("community agencies") || text.includes("social services") || text.includes("non-profit")) {
+    inferred.add("Community and non-profit service agencies");
+  }
+  if (text.includes("developmental")) {
+    inferred.add("Developmental services agencies");
+  }
+  if (text.includes("lcbo") || text.includes("liquor retail") || text.includes("lbed")) {
+    inferred.add("LCBO");
+  }
+  if (text.includes("college") || text.includes("caat")) {
+    inferred.add("Ontario public colleges");
+  }
+  if (text.includes("university")) {
+    inferred.add("Ontario universities");
+  }
+  if (text.includes("mpac") || text.includes("property assessment")) {
+    inferred.add("Municipal Property Assessment Corporation (MPAC)");
+  }
+  if (text.includes("ocwa")) {
+    inferred.add("Ontario Clean Water Agency (OCWA)");
+  }
+  if (text.includes("tssa")) {
+    inferred.add("Technical Standards and Safety Authority (TSSA)");
+  }
+  if (text.includes("executive board member") || text.includes("opseu ebm")) {
+    inferred.add("OPSEU/SEFPO");
+  }
+
+  return Array.from(inferred);
+}
+
+function buildLocalEmployerList({ local, role, sector, division, explicitEmployers }) {
+  const employerSet = new Set();
+
+  explicitEmployers.forEach((value) => {
+    const cleaned = cleanEmployerValue(value);
+    if (cleaned) employerSet.add(cleaned);
+  });
+
+  inferPotentialEmployers({ local, role, sector, division }).forEach((value) => {
+    const cleaned = cleanEmployerValue(value);
+    if (cleaned) employerSet.add(cleaned);
+  });
+
+  return Array.from(employerSet);
+}
+
+function collectRegionEmployers(region) {
+  const employerSet = new Set(Array.isArray(region.employers) ? region.employers : []);
+  (region.locals || []).forEach((local) => {
+    const localEmployers = Array.isArray(local.employers) && local.employers.length > 0
+      ? local.employers
+      : inferPotentialEmployers({
+        local: local.num,
+        role: local.role,
+        sector: local.sector,
+        division: "",
+      });
+    localEmployers.forEach((value) => {
+      const cleaned = cleanEmployerValue(value);
+      if (cleaned) employerSet.add(cleaned);
+    });
+  });
+  return Array.from(employerSet).sort((a, b) => a.localeCompare(b));
+}
+
+function withEmployersForFallback(data) {
+  const next = {};
+  Object.entries(data).forEach(([regionKey, regionValue]) => {
+    const locals = (regionValue.locals || []).map((local) => {
+      const employers = buildLocalEmployerList({
+        local: local.num,
+        role: local.role,
+        sector: local.sector,
+        division: "",
+        explicitEmployers: local.employers || [],
+      });
+      return { ...local, employers };
+    });
+    const region = {
+      ...regionValue,
+      locals,
+      employers: collectRegionEmployers({ ...regionValue, locals }),
+    };
+    next[regionKey] = region;
+  });
+  return next;
+}
+
+function joinWithCommasAnd(items) {
+  const clean = items.filter(Boolean);
+  if (clean.length === 0) return "";
+  if (clean.length === 1) return clean[0];
+  if (clean.length === 2) return `${clean[0]} and ${clean[1]}`;
+  return `${clean.slice(0, -1).join(", ")}, and ${clean[clean.length - 1]}`;
+}
+
+function buildEmployerSummary(employers) {
+  if (!Array.isArray(employers) || employers.length === 0) {
+    return {
+      types: ["Potential employer details will populate here once the updated employer list is finalized."],
+      examples: [],
+    };
+  }
+
+  const text = employers.map((e) => e.toLowerCase());
+  const has = (keywords) => text.some((entry) => keywords.some((k) => entry.includes(k)));
+
+  const types = [];
+  if (has(["ministry", "ops", "ontario public service", "agencies"])) {
+    types.push("OPS ministries and agencies");
+  }
+  if (has(["hospital", "health", "camh"])) {
+    types.push("hospitals and healthcare employers");
+  }
+  if (has(["college", "university", "caat"])) {
+    types.push("colleges and universities");
+  }
+  if (has(["municipal"])) {
+    types.push("municipal workplaces");
+  }
+  if (has(["community", "non-profit", "developmental", "children", "aid"])) {
+    types.push("community and social service agencies");
+  }
+  if (has(["attorney general", "court", "justice", "correction", "solicitor general"])) {
+    types.push("justice and corrections workplaces");
+  }
+  if (has(["lcbo", "liquor"])) {
+    types.push("liquor retail employers");
+  }
+
+  const filteredExamples = employers.filter((employer) => {
+    const lower = employer.toLowerCase();
+    return !(
+      lower.includes("employers") ||
+      lower.includes("workplaces") ||
+      lower.includes("agencies and") ||
+      lower.includes("organizations")
+    );
+  });
+
+  return {
+    types: types.length > 0 ? types : ["public and broader public service employers"],
+    examples: filteredExamples.slice(0, 3),
+  };
+}
+
+function parseCsvLine(line) {
+  const values = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i];
+    if (ch === "\"") {
+      const next = line[i + 1];
+      if (inQuotes && next === "\"") {
+        current += "\"";
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (ch === "," && !inQuotes) {
+      values.push(current.trim());
+      current = "";
+      continue;
+    }
+    current += ch;
+  }
+  values.push(current.trim());
+  return values;
+}
+
+function parseRegionNumber(rawValue) {
+  const text = String(rawValue || "").trim();
+  const match = text.match(/\d+/);
+  if (!match) return null;
+  const region = Number.parseInt(match[0], 10);
+  if (!Number.isInteger(region) || region < 1 || region > 7) return null;
+  return region;
+}
+
+function buildRegionSubtitle(region, rawCities) {
+  const base = (REGION_SUBTITLES[region] || "").split(" · ")[0] || `Region ${region}`;
+  const cities = String(rawCities || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .join(" · ");
+  return cities ? `${base} · ${cities}` : (REGION_SUBTITLES[region] || `Region ${region}`);
+}
+
+function buildRegionCopyFromCsv(csvText) {
+  const lines = csvText.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  const copy = {};
+  for (let r = 1; r <= 7; r += 1) copy[r] = {};
+  if (lines.length < 2) return copy;
+
+  const headers = parseCsvLine(lines[0]);
+  const lowerHeaders = headers.map((header) => header.toLowerCase().trim());
+  const findHeader = (predicate) => {
+    const idx = lowerHeaders.findIndex(predicate);
+    return idx === -1 ? null : headers[idx];
+  };
+
+  const regionHeader = findHeader((h) => h.includes("region"));
+  const citiesHeader = findHeader((h) => h.includes("example") || h.includes("cities") || h.includes("areas"));
+  const blurbHeader = findHeader((h) => h.includes("description") && !h.includes("continued") && !h.includes("hyperlink"));
+  const questionHeader = findHeader((h) => h.includes("hyperlink") || h.includes("continued") || h.includes("question"));
+
+  for (const line of lines.slice(1)) {
+    const cols = parseCsvLine(line);
+    const row = {};
+    headers.forEach((header, index) => { row[header] = cols[index] || ""; });
+
+    const region = parseRegionNumber(regionHeader ? row[regionHeader] : "");
+    if (!region) continue;
+
+    const subtitle = buildRegionSubtitle(region, citiesHeader ? row[citiesHeader] : "");
+    const blurb = String(blurbHeader ? row[blurbHeader] : "").trim();
+    const question = String(questionHeader ? row[questionHeader] : "").trim();
+
+    copy[region] = {
+      subtitle,
+      blurb,
+      question,
+    };
+  }
+
+  return copy;
+}
+
+async function fetchFirstAvailableCsv(paths) {
+  for (const path of paths) {
+    try {
+      const response = await fetch(path);
+      if (!response.ok) continue;
+      return await response.text();
+    } catch (_) {
+      // Try next path.
+    }
+  }
+  return null;
+}
+
+function buildRegionDataFromCsv(csvText) {
+  const lines = csvText.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  if (lines.length < 2) return withEmployersForFallback(LEGACY_REGION_DATA);
+
+  const headers = parseCsvLine(lines[0]);
+  const employerHeaders = headers.filter((h) => h.toLowerCase().includes("employer"));
+  const regions = {};
+  for (let r = 1; r <= 7; r += 1) {
+    regions[r] = { subtitle: REGION_SUBTITLES[r], locals: [], sectors: [], employers: [] };
+  }
+
+  const localDedup = new Set();
+  const sectorSets = {};
+  const employerSets = {};
+  for (let r = 1; r <= 7; r += 1) sectorSets[r] = new Set();
+  for (let r = 1; r <= 7; r += 1) employerSets[r] = new Set();
+
+  for (const line of lines.slice(1)) {
+    const cols = parseCsvLine(line);
+    const row = {};
+    headers.forEach((h, i) => { row[h] = cols[i] || ""; });
+
+    const region = Number.parseInt((row.Region || row.region || "").trim(), 10);
+    if (!Number.isInteger(region) || region < 1 || region > 7) continue;
+
+    const local = (row.Local || row.local || "").trim();
+    if (!local || local === "." || local.toLowerCase() === "n/a") continue;
+
+    const role = (row.Role || row.Sector || row.Industry || "Unspecified").trim();
+    const sector = (row.Industry || row.Sector || "Other BPS").trim();
+    const division = (row.Division || row.division || "").trim();
+    const explicitEmployers = employerHeaders.flatMap((header) => splitPotentialEmployers((row[header] || "").trim()));
+    const potentialEmployers = buildLocalEmployerList({
+      local,
+      role,
+      sector,
+      division,
+      explicitEmployers,
+    });
+
+    const dedupeKey = `${region}|${local}|${role}|${sector}`;
+    if (localDedup.has(dedupeKey)) continue;
+    localDedup.add(dedupeKey);
+
+    regions[region].locals.push({ num: local, sector, role, employers: potentialEmployers });
+    sectorSets[region].add(sector);
+    potentialEmployers.forEach((employer) => employerSets[region].add(employer));
+  }
+
+  for (let r = 1; r <= 7; r += 1) {
+    regions[r].sectors = Array.from(sectorSets[r]).sort((a, b) => a.localeCompare(b));
+    regions[r].employers = Array.from(employerSets[r]).sort((a, b) => a.localeCompare(b));
+    regions[r].locals.sort((a, b) => Number(a.num) - Number(b.num));
+  }
+
+  return regions;
+}
+
+function hexToRgba(hex, alpha) {
+  const clean = hex.replace("#", "");
+  const full = clean.length === 3
+    ? clean.split("").map((c) => c + c).join("")
+    : clean;
+  const r = Number.parseInt(full.slice(0, 2), 16);
+  const g = Number.parseInt(full.slice(2, 4), 16);
+  const b = Number.parseInt(full.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+const REGION_BASE_COLORS = {
+  1: "#dca694",
+  2: "#c6d0e2",
+  3: "#bcc8dc",
+  4: "#b2bfd6",
+  5: "#a8b6d0",
+  6: "#8b9ec0",
+  7: "#6f84ad",
+};
+
+const REGION_HOVER_COLORS = {
+  1: "#cf947d",
+  2: "#b6c4db",
+  3: "#aab9d2",
+  4: "#9eafcb",
+  5: "#93a5c6",
+  6: "#768cb2",
+  7: "#5f75a8",
+};
+
+const REGION_SELECTED_COLORS = {
+  1: "#c68167",
+  2: "#9daec9",
+  3: "#8d9fbc",
+  4: "#7f93b4",
+  5: "#7187ad",
+  6: "#5d74a2",
+  7: "#4a6297",
+};
+
+const MAP_DEFS = [
+  {
+    id: "north",
+    image: "https://oncanadaproject.github.io/ram4change/Region%206%20and%207%20Combined.png",
+    viewBox: "0 0 1250 1250",
+    width: 1250,
+    height: 1250,
+    regions: [7, 6],
+  },
+  {
+    id: "south",
+    image: "https://oncanadaproject.github.io/ram4change/Combined%20Regions%201%202%203%204%205.png",
+    viewBox: "0 0 1250 1250",
+    width: 1250,
+    height: 1250,
+    regions: [4, 3, 2, 1, 5],
+  },
+];
+
+const REGION_MASK_IMAGES = {
+  1: "https://oncanadaproject.github.io/ram4change/Region%201.png",
+  2: "https://oncanadaproject.github.io/ram4change/Region%202.png",
+  3: "https://oncanadaproject.github.io/ram4change/Region%203.png",
+  4: "https://oncanadaproject.github.io/ram4change/Region%204.png",
+  5: "https://oncanadaproject.github.io/ram4change/Region%205.png",
+  6: "https://oncanadaproject.github.io/ram4change/Region%206.png",
+  7: "https://oncanadaproject.github.io/ram4change/Region%207.png",
+};
+
+const REGION_HIT_ORDER_BY_MAP = {
+  south: [5, 4, 3, 2, 1],
+  north: [6, 7],
+};
+
+const MASK_ALPHA_THRESHOLD = 96;
+
+// Hand-tuned hit polygons for each split map panel.
+const REGION_SHAPES_BY_MAP = {
+  north: {
+    6: "688,388 670,396 662,404 654,412 646,420 638,428 630,436 622,444 614,452 606,460 598,468 590,476 582,484 574,492 566,500 558,508 550,516 542,524 534,532 526,540 518,548 510,556 502,564 494,572 486,580 478,588 470,596 462,604 454,612 446,620 438,628 430,636 443,644 453,652 457,660 459,668 460,676 462,684 466,692 471,700 478,708 525,716 523,724 520,732 521,740 527,748 534,756 537,764 533,772 530,780 534,788 547,796 543,804 542,812 541,820 563,828 565,836 589,844 658,852 701,860 741,868 751,876 795,884 834,892 859,897 864,897 877,892 893,884 909,876 927,868 932,860 927,852 915,844 880,836 846,828 837,820 833,812 826,804 822,796 816,788 810,780 808,772 808,764 804,756 801,748 803,740 804,732 803,724 803,716 803,708 802,700 802,692 801,684 801,676 801,668 800,660 800,652 800,644 799,636 799,628 799,620 798,612 798,604 798,596 797,588 797,580 796,572 796,564 796,556 795,548 795,540 795,532 794,524 794,516 794,508 793,500 793,492 791,484 784,476 779,468 767,460 744,452 745,444 742,436 738,428 732,420 726,412 718,404 703,396 696,388",
+    7: "386,25 375,33 366,41 357,49 348,57 338,65 329,73 320,81 311,89 302,97 293,105 284,113 274,121 265,129 256,137 247,145 238,153 229,161 220,169 210,177 201,185 192,193 183,201 174,209 165,217 155,225 145,233 133,241 121,249 109,257 97,265 85,273 77,281 74,289 73,297 71,305 70,313 68,321 66,329 65,337 63,345 62,353 60,361 59,369 57,377 55,385 54,393 52,401 51,409 49,417 47,425 46,433 44,441 42,449 41,457 39,465 37,473 36,481 34,489 32,497 30,505 29,513 27,521 26,529 25,537 36,545 37,553 37,561 36,569 37,577 37,585 42,593 56,601 73,609 80,617 136,625 140,633 143,641 166,649 171,657 181,665 237,673 265,681 280,686 285,686 295,681 300,673 303,665 306,657 336,649 424,641 432,633 440,625 448,617 456,609 464,601 472,593 480,585 488,577 496,569 504,561 512,553 520,545 528,537 536,529 544,521 552,513 560,505 568,497 576,489 584,481 592,473 600,465 608,457 616,449 624,441 632,433 640,425 648,417 656,409 664,401 672,393 678,385 693,377 692,369 683,361 677,353 673,345 664,337 659,329 660,321 662,313 667,305 665,297 662,289 661,281 664,273 665,265 662,257 659,249 654,241 651,233 652,225 655,217 658,209 661,201 663,193 662,185 662,177 650,169 611,161 535,153 532,145 522,137 512,129 497,121 482,113 467,105 448,97 436,89 434,81 429,73 424,65 419,57 409,49 402,41 395,33 386,25",
+  },
+  south: {
+    1: "146,575 148,579 150,583 151,587 151,591 152,595 152,599 153,603 154,607 155,611 156,615 156,619 156,623 156,627 155,631 153,635 152,639 149,643 147,647 144,651 141,655 138,659 133,663 129,667 126,671 124,675 121,679 118,683 116,687 114,691 110,695 105,699 99,703 94,707 92,711 90,715 89,719 88,723 88,727 88,731 87,735 87,739 87,743 87,747 87,751 87,755 87,759 87,763 87,767 87,771 87,775 87,779 87,783 88,787 90,791 96,795 101,799 102,803 103,807 103,811 102,815 101,819 99,823 96,827 92,831 85,835 37,839 31,843 28,847 26,851 26,855 26,859 27,863 28,867 29,871 31,875 33,879 40,883 47,886 52,886 61,883 70,879 83,875 95,871 98,867 101,863 104,859 107,855 111,851 115,847 119,843 123,839 127,835 132,831 137,827 143,823 149,819 154,815 157,811 160,807 163,803 167,799 170,795 172,791 175,787 178,783 181,779 184,775 187,771 190,767 193,763 195,759 198,755 201,751 204,747 209,743 213,739 219,735 224,731 236,727 269,723 321,719 328,715 331,711 333,707 337,703 340,699 342,695 344,691 346,687 288,683 284,679 280,675 276,671 272,667 268,663 264,659 260,655 256,651 252,647 248,643 244,639 240,635 236,631 232,627 228,623 224,619 220,615 216,611 212,607 208,603 204,599 200,595 196,591 192,587 188,583 184,579 180,575",
+    2: "113,312 110,316 112,320 116,324 120,328 124,332 128,336 134,340 140,344 143,348 146,352 148,356 150,360 152,364 155,368 158,372 160,376 161,380 161,384 162,388 163,392 164,396 166,400 167,404 167,408 168,412 167,416 164,420 162,424 160,428 159,432 158,436 157,440 156,444 152,448 148,452 145,456 143,460 142,464 141,468 141,472 141,476 141,480 140,484 140,488 140,492 138,496 137,500 136,504 135,508 135,512 136,516 136,520 136,524 137,528 137,532 138,536 138,540 139,544 140,548 141,552 141,556 142,560 143,564 144,568 145,572 182,576 186,580 190,584 194,588 198,592 202,596 206,600 210,604 214,608 218,612 222,616 226,620 230,624 234,628 238,632 242,636 246,640 250,644 254,648 258,652 262,656 266,660 270,664 274,668 278,672 282,676 286,680 290,684 347,684 349,680 354,676 365,672 376,668 386,664 389,660 389,656 389,652 389,648 389,644 389,640 389,636 389,632 389,628 389,624 389,620 389,616 389,612 389,608 389,604 389,600 389,596 389,592 389,588 389,584 389,580 389,576 389,572 389,568 389,564 389,560 386,556 382,552 378,548 374,544 370,540 366,536 362,532 358,528 354,524 350,520 346,516 342,512 338,508 334,504 334,500 334,496 334,492 334,488 334,484 334,480 334,476 334,472 334,468 334,464 334,460 334,456 334,452 334,448 334,444 334,440 334,436 334,432 334,428 334,424 334,420 334,416 333,412 329,408 325,404 321,400 260,396 240,392 237,388 234,384 232,380 195,376 193,372 168,368 170,364 172,360 171,356 161,352 153,348 149,344 144,340 141,336 139,332 136,328 133,324 129,320 125,316 120,312",
+    3: "530,119 521,127 511,135 501,143 492,151 481,159 471,167 463,175 455,183 198,191 201,199 212,207 237,215 240,223 242,231 247,239 285,247 287,255 290,263 295,271 301,279 304,287 310,295 316,303 324,311 331,319 343,327 347,335 314,343 315,351 319,359 322,367 323,375 321,383 319,391 316,399 329,407 335,413 431,413 563,407 597,399 600,391 600,383 600,375 600,367 600,359 600,351 600,343 600,335 600,327 600,319 592,311 584,303 576,295 568,287 560,279 552,271 544,263 536,255 531,247 531,239 531,231 531,223 531,215 531,207 531,199 531,191 531,183 531,175 531,167 531,159 531,151 531,143 531,135 531,127 531,119",
+    4: "901,30 869,38 852,46 842,54 831,62 820,70 624,78 576,86 563,94 552,102 542,110 533,118 532,126 532,134 532,142 532,150 532,158 532,166 532,174 532,182 532,190 532,198 532,206 532,214 532,222 532,230 532,238 532,246 536,254 544,262 552,270 560,278 568,286 576,294 584,302 592,310 600,318 601,326 601,334 601,342 601,350 601,358 601,366 601,374 601,382 601,390 601,396 685,390 687,382 678,374 643,366 643,358 650,350 670,342 693,334 715,326 728,318 742,310 754,302 764,294 774,286 784,278 793,270 799,262 805,254 809,246 814,238 818,230 822,222 826,214 831,206 835,198 840,190 844,182 849,174 854,166 860,158 866,150 873,142 879,134 888,126 904,118 920,110 920,102 920,94 920,86 920,78 920,70 920,62 920,54 920,46 920,38 919,30",
+    5: "426,427 488,452 456,520 394,490",
+  },
+};
+
+function keepLargestMaskComponent(alpha, width, height) {
+  const active = new Uint8Array(alpha.length);
+  for (let i = 0; i < alpha.length; i += 1) {
+    if (alpha[i] > MASK_ALPHA_THRESHOLD) active[i] = 1;
+  }
+
+  const visited = new Uint8Array(alpha.length);
+  let largestComponent = [];
+
+  for (let i = 0; i < active.length; i += 1) {
+    if (!active[i] || visited[i]) continue;
+
+    const component = [];
+    const queue = [i];
+    visited[i] = 1;
+
+    for (let q = 0; q < queue.length; q += 1) {
+      const idx = queue[q];
+      component.push(idx);
+      const x = idx % width;
+      const y = (idx - x) / width;
+
+      if (x > 0) {
+        const left = idx - 1;
+        if (active[left] && !visited[left]) {
+          visited[left] = 1;
+          queue.push(left);
+        }
+      }
+      if (x < width - 1) {
+        const right = idx + 1;
+        if (active[right] && !visited[right]) {
+          visited[right] = 1;
+          queue.push(right);
+        }
+      }
+      if (y > 0) {
+        const up = idx - width;
+        if (active[up] && !visited[up]) {
+          visited[up] = 1;
+          queue.push(up);
+        }
+      }
+      if (y < height - 1) {
+        const down = idx + width;
+        if (active[down] && !visited[down]) {
+          visited[down] = 1;
+          queue.push(down);
+        }
+      }
+    }
+
+    if (component.length > largestComponent.length) {
+      largestComponent = component;
+    }
+  }
+
+  if (!largestComponent.length) return alpha;
+
+  const filtered = new Uint8Array(alpha.length);
+  for (let i = 0; i < largestComponent.length; i += 1) {
+    const idx = largestComponent[i];
+    filtered[idx] = alpha[idx];
+  }
+  return filtered;
+}
+
+function buildMaskDataForRegion(img, width, height) {
+  const c = document.createElement("canvas");
+  c.width = width;
+  c.height = height;
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return null;
+  ctx.clearRect(0, 0, width, height);
+  ctx.drawImage(img, 0, 0, width, height);
+
+  const rgba = ctx.getImageData(0, 0, width, height).data;
+  const alpha = new Uint8Array(width * height);
+  for (let i = 0; i < alpha.length; i += 1) {
+    alpha[i] = rgba[(i * 4) + 3];
+  }
+
+  const filteredAlpha = keepLargestMaskComponent(alpha, width, height);
+  const edges = [];
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const idx = (y * width) + x;
+      if (filteredAlpha[idx] <= MASK_ALPHA_THRESHOLD) continue;
+      const isEdge =
+        x === 0 || y === 0 || x === width - 1 || y === height - 1 ||
+        filteredAlpha[idx - 1] <= MASK_ALPHA_THRESHOLD ||
+        filteredAlpha[idx + 1] <= MASK_ALPHA_THRESHOLD ||
+        filteredAlpha[idx - width] <= MASK_ALPHA_THRESHOLD ||
+        filteredAlpha[idx + width] <= MASK_ALPHA_THRESHOLD;
+      if (isEdge) edges.push(idx);
+    }
+  }
+
+  return { image: img, alpha: filteredAlpha, edges };
+}
+
+function paintRegionTint(ctx, regionMask, width, height, color) {
+  const tintCanvas = document.createElement("canvas");
+  tintCanvas.width = width;
+  tintCanvas.height = height;
+  const tintCtx = tintCanvas.getContext("2d");
+  if (!tintCtx) return;
+
+  // Build tint only from the active region alpha, then stamp it onto the map.
+  tintCtx.drawImage(regionMask.image, 0, 0, width, height);
+  tintCtx.globalCompositeOperation = "source-in";
+  tintCtx.fillStyle = color;
+  tintCtx.fillRect(0, 0, width, height);
+
+  ctx.drawImage(tintCanvas, 0, 0, width, height);
+}
+
+function InteractiveExactMap({
+  mapDef,
+  activeRegion,
+  selectedRegion,
+  onHoverRegion,
+  onSelectRegion,
+  onMapError,
+  onMapReady,
+}) {
+  const overlayRef = useRef(null);
+  const [mapImage, setMapImage] = useState(null);
+  const [masksByRegion, setMasksByRegion] = useState(null);
+  const localActiveRegion = mapDef.regions.includes(activeRegion) ? activeRegion : null;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadImage = (src) => new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+
+    Promise.all([
+      loadImage(mapDef.image),
+      Promise.all(
+        mapDef.regions.map(async (region) => {
+          const img = await loadImage(REGION_MASK_IMAGES[region]);
+          return [region, buildMaskDataForRegion(img, mapDef.width, mapDef.height)];
+        }),
+      ),
+    ])
+      .then(([baseImg, pairs]) => {
+        if (cancelled) return;
+        const next = {};
+        pairs.forEach(([region, data]) => {
+          if (data) next[region] = data;
+        });
+        setMapImage(baseImg);
+        setMasksByRegion(next);
+        onMapReady();
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setMapImage(null);
+        setMasksByRegion(null);
+        onMapError();
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [mapDef.id]);
+
+  useEffect(() => {
+    const canvas = overlayRef.current;
+    if (!canvas || !masksByRegion || !mapImage) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const width = mapDef.width;
+    const height = mapDef.height;
+    canvas.width = width;
+    canvas.height = height;
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(mapImage, 0, 0, width, height);
+    if (!localActiveRegion) return;
+
+    const activeData = masksByRegion[localActiveRegion];
+    if (!activeData) return;
+    const isSelected = selectedRegion === localActiveRegion;
+    const fillBase = isSelected
+      ? REGION_SELECTED_COLORS[localActiveRegion]
+      : REGION_HOVER_COLORS[localActiveRegion];
+
+    paintRegionTint(
+      ctx,
+      activeData,
+      width,
+      height,
+      isSelected ? hexToRgba(fillBase, 0.16) : hexToRgba(fillBase, 0.08),
+    );
+
+    const edgeColor = isSelected ? BRAND.indigo : "#7a8fb4";
+    const edgeThickness = 1;
+    ctx.fillStyle = edgeColor;
+    activeData.edges.forEach((idx) => {
+      const x = idx % width;
+      const y = (idx - x) / width;
+      ctx.fillRect(x, y, 1, 1);
+      if (edgeThickness > 1) {
+        ctx.fillRect(x + 1, y, 1, 1);
+        ctx.fillRect(x - 1, y, 1, 1);
+        ctx.fillRect(x, y + 1, 1, 1);
+        ctx.fillRect(x, y - 1, 1, 1);
+      }
+    });
+  }, [masksByRegion, mapImage, localActiveRegion, selectedRegion, mapDef.id]);
+
+  const pickRegionAtPointer = (evt) => {
+    const canvas = overlayRef.current;
+    if (!canvas || !masksByRegion) return null;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
+
+    const px = Math.max(0, Math.min(mapDef.width - 1, Math.round(((evt.clientX - rect.left) / rect.width) * mapDef.width)));
+    const py = Math.max(0, Math.min(mapDef.height - 1, Math.round(((evt.clientY - rect.top) / rect.height) * mapDef.height)));
+    const idx = (py * mapDef.width) + px;
+    const order = REGION_HIT_ORDER_BY_MAP[mapDef.id] || mapDef.regions;
+
+    for (const region of order) {
+      const data = masksByRegion[region];
+      if (!data) continue;
+      if (data.alpha[idx] > MASK_ALPHA_THRESHOLD) return region;
+    }
+    return null;
+  };
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "min(100%, 430px)",
+        maxWidth: "430px",
+        aspectRatio: `${mapDef.width} / ${mapDef.height}`,
+        margin: "0 auto",
+      }}
+      onMouseLeave={() => onHoverRegion(null)}
+    >
+      <canvas
+        ref={overlayRef}
+        tabIndex={-1}
+        onMouseMove={(evt) => {
+          onHoverRegion(pickRegionAtPointer(evt));
+        }}
+        onClick={(evt) => {
+          const region = pickRegionAtPointer(evt);
+          if (region) onSelectRegion(region);
+        }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          borderRadius: "8px",
+          border: "none",
+          outline: "none",
+          display: "block",
+          cursor: "pointer",
+          touchAction: "manipulation",
+        }}
+      />
+    </div>
+  );
+}
+
+function SectorTag({ sector }) {
+  return (
+    <span style={{
+      display: "inline-block", background: "#e9eef6", color: BRAND.indigo,
+      padding: "3px 8px", borderRadius: "3px", fontSize: "10px",
+      fontFamily: "Open Sans, sans-serif", fontWeight: 600,
+      letterSpacing: "0.3px", whiteSpace: "nowrap",
+      border: "1px solid #c8d3e4",
+    }}>{sector}</span>
+  );
+}
+
+function OntarioReachMap({ children = null }) {
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [hoveredRegion, setHoveredRegion] = useState(null);
+  const [mapLoadErrors, setMapLoadErrors] = useState({});
+  const [regionData, setRegionData] = useState(withEmployersForFallback(LEGACY_REGION_DATA));
+  const [regionCopy, setRegionCopy] = useState({});
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const readyTimer = setTimeout(() => setReady(true), 80);
+    let cancelled = false;
+
+    (async () => {
+      const [attendanceCsvText, regionCopyCsvText] = await Promise.all([
+        fetchFirstAvailableCsv(ATTENDANCE_CSV_PATHS),
+        fetchFirstAvailableCsv(REGION_COPY_CSV_PATHS),
+      ]);
+
+      if (cancelled) return;
+
+      if (attendanceCsvText) {
+        setRegionData(buildRegionDataFromCsv(attendanceCsvText));
+      } else {
+        setRegionData(withEmployersForFallback(LEGACY_REGION_DATA));
+      }
+
+      if (regionCopyCsvText) {
+        setRegionCopy(buildRegionCopyFromCsv(regionCopyCsvText));
+      } else {
+        setRegionCopy({});
+      }
+    })().catch(() => {
+      if (!cancelled) {
+        setRegionData(withEmployersForFallback(LEGACY_REGION_DATA));
+        setRegionCopy({});
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      clearTimeout(readyTimer);
+    };
+  }, []);
+
+  const active = hoveredRegion || selectedRegion;
+  const selectedRegionEmployers = selectedRegion
+    ? collectRegionEmployers(regionData[selectedRegion] || { locals: [], employers: [] })
+    : [];
+  const selectedRegionEmployerSummary = selectedRegion
+    ? buildEmployerSummary(selectedRegionEmployers)
+    : { types: [], examples: [] };
+  const fallbackSelectedRegionInsight = selectedRegion === 5
+    ? `${regionData[5].sectors.length} sectors and ${regionData[5].locals.length} locals in one room - courts, corrections, colleges, OPS, community agencies, and healthcare. The signal is not "base"; it is cross-sector reality meeting in the same conversation. This is how we build an agenda that does not leave any group fighting alone. Region 5 is also a strategic launch point for the broader campaign, so turnout is naturally deepest here right now.`
+    : selectedRegion === 7
+    ? `Northwestern members are often the first to feel what it means when leadership is far away - especially on servicing and sector-specific support. They showed up anyway. That is exactly why these town halls are built as ongoing infrastructure, not a one-off event.`
+    : selectedRegion === 6
+    ? `Corrections, OPS, child protection, and college workers in the same room. Different systems, same pattern: when servicing breaks down, members carry the cost in stress, delays, and risk. This is the work: making that reality visible, then building a plan that can actually execute.`
+    : selectedRegion === 3
+    ? `${regionData[3].sectors.length} sectors represented, including healthcare and education alongside OPS and property assessment. Cross-sector rooms surface the same issue again and again: members want consistency where work actually happens.`
+    : selectedRegion === 4
+    ? `${regionData[4].sectors.length} sectors in the room, including mental health, hospitals, OPS, and corrections. This mix matters because the union cannot build real leverage if sectors stay siloed and only meet at convention.`
+    : selectedRegion === 2
+    ? `${regionData[2].sectors.length} sectors across education, justice, social services, OPS, and municipal work. When this many roles show up together, the common denominator gets clear fast: members want a union that delivers on servicing, bargaining power, and value for dues.`
+    : selectedRegion === 1
+    ? `${regionData[1].locals.length} locals, ${regionData[1].sectors.length} sectors - hospital, courts, OPS, and retail. Small room, clear signal: different workplaces, same expectation - deliver for members first.`
+    : selectedRegion
+    ? `${regionData[selectedRegion].locals.length} locals spanning ${regionData[selectedRegion].sectors.length} sectors - different workplaces, different realities, same table.`
+    : "";
+  const fallbackSelectedRegionReflectionPrompt = selectedRegion === 5
+    ? "What should Ram prioritize first as Region 5 momentum scales province-wide?"
+    : selectedRegion === 7
+    ? "What support gap is most urgent for members across Northwestern Ontario right now?"
+    : selectedRegion === 6
+    ? "Where are Region 6 members carrying the biggest servicing burden today?"
+    : selectedRegion === 3
+    ? "What would it look like if OPSEU consistently had members' backs where work actually happens?"
+    : selectedRegion === 4
+    ? "What leverage should OPSEU build first in this mixed Region 4 sector base?"
+    : selectedRegion === 2
+    ? "What would a delivery-first union look like for Region 2 workplaces this year?"
+    : selectedRegion === 1
+    ? "What should members in Region 1 be able to count on from day one?"
+    : selectedRegion
+    ? "What should this region's members make non-negotiable in the next mandate?"
+    : "";
+  const selectedRegionSubtitle = selectedRegion
+    ? ((regionCopy[selectedRegion] && regionCopy[selectedRegion].subtitle) || regionData[selectedRegion].subtitle)
+    : "";
+  const selectedRegionInsight = selectedRegion
+    ? ((regionCopy[selectedRegion] && regionCopy[selectedRegion].blurb) || fallbackSelectedRegionInsight)
+    : "";
+  const selectedRegionReflectionPrompt = selectedRegion
+    ? ((regionCopy[selectedRegion] && regionCopy[selectedRegion].question) || fallbackSelectedRegionReflectionPrompt)
+    : "";
+
+  return (
+    <div style={{
+      background: BRAND.page,
+      fontFamily: "'Oswald', sans-serif", color: BRAND.night,
+      position: "relative",
+    }}>
+      <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+
+      {/* Header */}
+      <div style={{
+        padding: "32px 32px 0", position: "relative", zIndex: 2,
+        opacity: ready ? 1 : 0, transform: ready ? "translateY(0)" : "translateY(-12px)",
+        transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}>
+        <p style={{
+          fontFamily: "Open Sans, sans-serif",
+          fontSize: "14px",
+          color: BRAND.indigo,
+          margin: 0,
+          lineHeight: 1.7,
+          maxWidth: "980px",
+          fontWeight: 600,
+        }}>
+          Ram Selvarajah has been building a member driven mandate since November 2025. Click the regions below to see who's been in the room, or{" "}
+          <a
+            className="gpiLink"
+            href="https://www.ram4change.ca/member-driven#insights"
+            target="_blank"
+            rel="noreferrer"
+          >
+            scroll
+          </a>{" "}
+          to learn about member insights.
+        </p>
+      </div>
+
+      {/* Main layout */}
+      <div className="mainLayout" style={{
+        display: "grid",
+        gridTemplateColumns: selectedRegion ? "minmax(0, 1fr) 340px" : "1fr",
+        gap: "20px", padding: "20px 32px 32px",
+        position: "relative", zIndex: 2,
+        opacity: ready ? 1 : 0, transition: "opacity 0.6s ease 0.2s",
+      }}>
+
+        {/* MAPS */}
+        <div className="mapPanelsGrid" style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "16px",
+          alignItems: "start",
+        }}>
+          {MAP_DEFS.map((mapDef) => (
+            <div key={mapDef.id} style={{
+              background: BRAND.page,
+              border: `1px solid ${BRAND.line}`,
+              borderRadius: "12px",
+              padding: "10px",
+            }}>
+              <InteractiveExactMap
+                mapDef={mapDef}
+                activeRegion={active}
+                selectedRegion={selectedRegion}
+                onHoverRegion={(region) => setHoveredRegion(region)}
+                onSelectRegion={(region) => {
+                  setSelectedRegion(selectedRegion === region ? null : region);
+                }}
+                onMapError={() => {
+                  setMapLoadErrors((prev) => ({ ...prev, [mapDef.id]: true }));
+                }}
+                onMapReady={() => {
+                  setMapLoadErrors((prev) => ({ ...prev, [mapDef.id]: false }));
+                }}
+              />
+
+              {mapLoadErrors[mapDef.id] && (
+                <div style={{
+                  marginTop: "8px",
+                  padding: "6px 8px",
+                  borderRadius: "6px",
+                  border: "1px solid #f0d3d3",
+                  background: "#fff4f4",
+                  color: "#9d5252",
+                  fontFamily: "Open Sans, sans-serif",
+                  fontSize: "11px",
+                }}>
+                  Map image failed to load for this panel.
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* DETAIL PANEL */}
+        {selectedRegion && (
+          <div className="detailPanel detailPanelWrap" style={{
+            background: "#ffffff", borderRadius: "12px",
+            border: `1px solid ${BRAND.line}`, padding: "24px",
+            animation: "slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+            overflow: "auto", maxHeight: "540px",
+          }}>
+            {/* Header */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+              <div>
+                <h2 style={{
+                  fontFamily: "Oswald, sans-serif", fontSize: "22px", fontWeight: 700,
+                  color: BRAND.navy, margin: 0, lineHeight: 1,
+                }}>Region {selectedRegion}</h2>
+                <p style={{
+                  fontFamily: "Open Sans, sans-serif", fontSize: "12px",
+                  color: BRAND.taupe, margin: "4px 0 0",
+                }}>{selectedRegionSubtitle}</p>
+                <div style={{
+                  marginTop: "10px",
+                  maxWidth: "250px",
+                  background: "#f4f6fa",
+                  border: `1px solid ${BRAND.line}`,
+                  borderRadius: "10px",
+                  padding: "10px 11px",
+                }}>
+                  <p style={{
+                    fontFamily: "Open Sans, sans-serif",
+                    fontSize: "11px",
+                    color: BRAND.taupe,
+                    margin: 0,
+                    lineHeight: 1.5,
+                  }}>
+                    {selectedRegionInsight}
+                  </p>
+                  {selectedRegionReflectionPrompt && (
+                    <p style={{ margin: "8px 0 0" }}>
+                      <a
+                        className="gpiLink"
+                        href="https://www.ram4change.ca/support#share-your-voice"
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          fontWeight: 600,
+                          fontFamily: "Open Sans, sans-serif",
+                          fontSize: "11px",
+                          lineHeight: 1.45,
+                        }}
+                      >
+                        {selectedRegionReflectionPrompt}
+                      </a>
+                    </p>
+                  )}
+                </div>
+              </div>
+              <button onClick={() => { setSelectedRegion(null); }}
+                style={{
+                  background: "#f5f7fa", border: `1px solid ${BRAND.line}`,
+                  color: BRAND.indigo, borderRadius: "4px", padding: "4px 10px",
+                  fontFamily: "Open Sans", fontSize: "10px", cursor: "pointer",
+                  fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase",
+                }}>Close</button>
+            </div>
+
+            {/* Locals */}
+            <div style={{
+              fontFamily: "Oswald, sans-serif", fontSize: "11px", fontWeight: 600,
+              letterSpacing: "2px", textTransform: "uppercase", color: BRAND.indigo, margin: "0 0 10px",
+            }}>{regionData[selectedRegion].locals.length} Locals in the Room</div>
+
+            <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginBottom: "4px" }}>
+              {regionData[selectedRegion].locals.map((local, i) => (
+                <span
+                  key={i}
+                  title={`${local.role} · ${local.sector}`}
+                  style={{
+                    display: "inline-block",
+                    background: "#e9eef6",
+                    color: BRAND.indigo,
+                    padding: "3px 8px",
+                    borderRadius: "3px",
+                    fontSize: "12px",
+                    fontFamily: "Oswald, sans-serif",
+                    fontWeight: 600,
+                    letterSpacing: "0.3px",
+                    whiteSpace: "nowrap",
+                    border: "1px solid #c8d3e4",
+                  }}
+                >
+                  L-{local.num}
+                </span>
+              ))}
+            </div>
+
+            <div style={{ height: "1px", background: "#e1e7ef", margin: "14px 0 14px" }} />
+
+            <div style={{
+              fontFamily: "Oswald, sans-serif", fontSize: "11px", fontWeight: 600,
+              letterSpacing: "2px", textTransform: "uppercase", color: BRAND.indigo, margin: "0 0 8px",
+            }}>
+              Representing {regionData[selectedRegion].sectors.length} Different Sectors
+            </div>
+
+            <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginBottom: "4px" }}>
+              {regionData[selectedRegion].sectors.map((s, i) => (
+                <SectorTag key={i} sector={s} />
+              ))}
+            </div>
+
+            <div style={{
+              fontFamily: "Oswald, sans-serif", fontSize: "11px", fontWeight: 600,
+              letterSpacing: "2px", textTransform: "uppercase", color: BRAND.indigo, margin: "14px 0 8px",
+            }}>
+              Potential Employers Included
+            </div>
+
+            <ul style={{
+              margin: "0 0 6px 16px",
+              padding: 0,
+              color: BRAND.taupe,
+              fontFamily: "Open Sans, sans-serif",
+              fontSize: "11px",
+              lineHeight: 1.45,
+            }}>
+              {selectedRegionEmployerSummary.types.map((type, i) => (
+                <li key={i} style={{ marginBottom: "3px" }}>
+                  {type}
+                </li>
+              ))}
+            </ul>
+            {selectedRegionEmployerSummary.examples.length > 0 && (
+              <p style={{
+                fontFamily: "Open Sans, sans-serif",
+                fontSize: "11px",
+                color: BRAND.taupe,
+                margin: "0 0 4px",
+                lineHeight: 1.45,
+              }}>
+                Examples: {joinWithCommasAnd(selectedRegionEmployerSummary.examples)}.
+              </p>
+            )}
+
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{ padding: "0 32px 24px", position: "relative", zIndex: 2 }}>
+        <p style={{
+          fontFamily: "Open Sans, sans-serif", fontSize: "10px",
+          color: BRAND.taupe, maxWidth: "620px", lineHeight: 1.5,
+        }}>
+          Pre-Registration Data, Ram4Change State of Our Union Townhalls, Dec 2025 – Feb 2026. By{" "}
+          <a
+            className="gpiLink"
+            href="https://groupproject.ca"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Group Project Initiatives
+          </a>
+        </p>
+      </div>
+
+      {children && (
+        <div style={{ padding: "0 32px 32px", position: "relative", zIndex: 2 }}>
+          {children}
+        </div>
+      )}
+
+      <style>{`
+        @keyframes slideIn {
+          from { opacity: 0; transform: translateX(16px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        .gpiLink {
+          color: #3e5184;
+          text-decoration: none;
+          border-bottom: 1px solid transparent;
+          transition: color 0.16s ease, border-color 0.16s ease;
+        }
+
+        .gpiLink:hover {
+          color: #dca694;
+          border-color: #dca694;
+        }
+
+        @media (max-width: 980px) {
+          .mainLayout {
+            grid-template-columns: 1fr !important;
+          }
+        }
+
+        @media (max-width: 780px) {
+          .heroTitle {
+            white-space: normal !important;
+          }
+          .detailPanelWrap {
+            order: -1;
+            margin-bottom: 8px;
+          }
+          .mapPanelsGrid {
+            grid-template-columns: 1fr !important;
+          }
+          .detailPanel {
+            max-height: none !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("map-root"));
+root.render(<OntarioReachMap />);
+
+</script>
+</body>
+</html>
