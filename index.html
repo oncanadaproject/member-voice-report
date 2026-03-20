@@ -928,119 +928,84 @@
     }
 
 
-    /* ── PLAN TAB: PRINCIPLES CAROUSEL ── */
-    .plan-principles-wrap {
-      position: relative;
-      margin: 0 -24px;
-      padding: 0 24px;
+    /* ── PLAN TAB: PRINCIPLES GRID ── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
     }
-    .plan-principles-carousel {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 8px;
-    }
-    .plan-principles-carousel::-webkit-scrollbar { display: none; }
-    .plan-slide {
-      flex: 0 0 100%;
-      scroll-snap-align: center;
-      padding: 0 4px;
-    }
-    .plan-card {
+    .principle-card {
       background: #fff;
-      border-radius: 20px;
-      padding: 40px 36px;
-      border: 1px solid rgba(15,34,78,0.07);
-      min-height: 200px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,34,78,0.08);
+      overflow: hidden;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .principle-card:hover {
+      border-color: rgba(15,34,78,0.18);
+      box-shadow: 0 4px 16px rgba(15,34,78,0.08);
+    }
+    .principle-card.open {
+      border-color: var(--navy);
+    }
+    .principle-card-face {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 22px;
     }
-    .plan-counter {
+    .principle-num {
       font-family: var(--f-display);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 0.72rem;
+      font-weight: 700;
       color: var(--warm-dark);
-      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      width: 28px;
     }
-    .plan-principle-name {
+    .principle-title {
       font-family: var(--f-display);
-      font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+      font-size: 0.88rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.02em;
       color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 14px;
+      line-height: 1.25;
+      flex: 1;
+      margin: 0;
     }
-    .plan-principle-text {
-      font-size: 0.95rem;
+    .principle-toggle {
+      font-family: var(--f-display);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      line-height: 1;
+    }
+    .principle-card.open .principle-toggle {
+      transform: rotate(45deg);
+      color: var(--navy);
+    }
+    .principle-card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 22px;
+    }
+    .principle-card.open .principle-card-body {
+      max-height: 500px;
+      padding: 0 22px 22px;
+    }
+    .principle-card-body p {
+      font-size: 0.9rem;
       color: var(--dark-warm);
       line-height: 1.65;
-      max-width: 560px;
-    }
-    .plan-carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 20px;
-    }
-    .plan-carousel-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(15,34,78,0.15);
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 0;
-    }
-    .plan-carousel-dot.active {
-      background: var(--navy);
-      width: 28px;
-      border-radius: 5px;
-    }
-    .plan-carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      z-index: 3;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(15,34,78,0.2);
-    }
-    .plan-carousel-nav:hover {
-      background: var(--blue);
-      transform: translateY(-50%) scale(1.08);
-    }
-    .plan-carousel-nav:disabled {
-      opacity: 0;
-      cursor: default;
-      pointer-events: none;
-    }
-    .plan-carousel-prev { left: -8px; }
-    .plan-carousel-next { right: -8px; }
-    .plan-swipe-hint {
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 8px;
-      letter-spacing: 0.04em;
+      margin: 0;
+      border-top: 1px solid rgba(15,34,78,0.06);
+      padding-top: 16px;
     }
 
     /* ── PLAN TAB: PRIORITY BLOCKS ── */
@@ -1146,8 +1111,7 @@
     }
 
     @media (max-width: 600px) {
-      .plan-principles-wrap { margin: 0 -16px; padding: 0 16px; }
-      .plan-carousel-nav { display: none; }
+      .principles-grid { grid-template-columns: 1fr; }
       .plan-card { padding: 32px 24px; min-height: 180px; }
       .plan-action-item { padding: 16px 18px; }
     }
@@ -1234,48 +1198,77 @@
         <p class="plan-section-desc">These aren't slogans &mdash; they're commitments this campaign is already living by.</p>
       </div>
 
-      <div class="plan-principles-wrap anim">
-        <button class="plan-carousel-nav plan-carousel-prev" aria-label="Previous" disabled>&#8592;</button>
-        <button class="plan-carousel-nav plan-carousel-next" aria-label="Next">&#8594;</button>
-        <div class="plan-principles-carousel" id="planCarousel">
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 01 of 07</div>
-            <div class="plan-principle-name">Measure Before You Move</div>
-            <p class="plan-principle-text">Before any reform, we measure what&rsquo;s actually happening. Staff workload, local health, where the money goes, which services are reaching members and which aren&rsquo;t. How many grievances are backlogged? How long is the average member waiting for representation? Which locals are thriving and which are collapsing under caseload? Right now, nobody&rsquo;s tracking this. You can&rsquo;t fix what you refuse to count, and you can&rsquo;t ask members to trust the process when there&rsquo;s no data to back it up.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 02 of 07</div>
-            <div class="plan-principle-name">Demonstrate, Don&rsquo;t Declare</div>
-            <p class="plan-principle-text">I actively practice what I&rsquo;m promising to do as First VP. Leaders shouldn&rsquo;t need an official role to demonstrate how they show up. The townhalls, the member insight dashboard, the delegate toolkit. All built before winning anything, with a small team and limited resources. That&rsquo;s not a slogan. That&rsquo;s how the office should operate.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 03 of 07</div>
-            <div class="plan-principle-name">Fix the System Before You Blame the People In It</div>
-            <p class="plan-principle-text">When a local is struggling or a staff member is falling behind, the first question isn&rsquo;t &ldquo;who&rsquo;s failing?&rdquo; It&rsquo;s &ldquo;do you have what you need to do your job?&rdquo; Staff, stewards, local presidents. If the tools are broken, the training is outdated, and the caseloads are unsustainable, that&rsquo;s not a people problem. That&rsquo;s a leadership problem. Fix what&rsquo;s setting people up to fail, then hold everyone to a higher standard.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 04 of 07</div>
-            <div class="plan-principle-name">Two Terms. Then the Next Generation.</div>
-            <p class="plan-principle-text">Two terms as First VP/Treasurer. That&rsquo;s it. By the end of that, you&rsquo;ve either delivered on what you promised or you haven&rsquo;t. After that, real succession planning, knowledge transfer, and room for the next generation of leaders to step up. The goal is to build something that outlasts any one person in the role.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 05 of 07</div>
-            <div class="plan-principle-name">Invest in the People Who Do the Work</div>
-            <p class="plan-principle-text">Stewards, local presidents, bargaining teams, committee members. These are the people holding the union together at the ground level. They deserve training that&rsquo;s current, relevant to their collective agreement, and built for the fights they&rsquo;re actually in. Not a generic course that hasn&rsquo;t been updated in a decade. Not a video before bargaining. Real investment in the people who show up for members every day.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 06 of 07</div>
-            <div class="plan-principle-name">Bread and Butter First</div>
-            <p class="plan-principle-text">The union exists to make sure working people have a good standard of living and their rights are protected. Wages, representation, workload, safety. The number one issue members raised across every sector and every region was the same: affordability. Paycheques aren&rsquo;t keeping up. Grievances sit for years. Caseloads are unsustainable. Get the basics right first. Everything else flows from that.</p>
-          </div></div>
-          <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 07 of 07</div>
-            <div class="plan-principle-name">Accountable to Members, Not to the Board Table</div>
-            <p class="plan-principle-text">The First VP/Treasurer&rsquo;s job is oversight. That means asking hard questions about spending, hiring, and priorities, even when those questions are uncomfortable. If the person in this role owes their seat to the people sitting around that same table, who&rsquo;s actually doing the oversight? Members deserve a First VP who answers to them.</p>
-          </div></div>
+      <div class="principles-grid anim">
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">01</span>
+            <h3 class="principle-title">Measure Before You Move</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Before any reform, we measure what&rsquo;s actually happening. Staff workload, local health, where the money goes, which services are reaching members and which aren&rsquo;t. How many grievances are backlogged? How long is the average member waiting for representation? Which locals are thriving and which are collapsing under caseload? Right now, nobody&rsquo;s tracking this. You can&rsquo;t fix what you refuse to count, and you can&rsquo;t ask members to trust the process when there&rsquo;s no data to back it up.</p>
+          </div>
         </div>
-        <div class="plan-carousel-dots" id="planDots"></div>
-        <div class="plan-swipe-hint">Swipe or use arrows to explore</div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">02</span>
+            <h3 class="principle-title">Demonstrate, Don&rsquo;t Declare</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>I actively practice what I&rsquo;m promising to do as First VP. Leaders shouldn&rsquo;t need an official role to demonstrate how they show up. The townhalls, the member insight dashboard, the delegate toolkit. All built before winning anything, with a small team and limited resources. That&rsquo;s not a slogan. That&rsquo;s how the office should operate.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">03</span>
+            <h3 class="principle-title">Fix the System Before You Blame the People In It</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>When a local is struggling or a staff member is falling behind, the first question isn&rsquo;t &ldquo;who&rsquo;s failing?&rdquo; It&rsquo;s &ldquo;do you have what you need to do your job?&rdquo; Staff, stewards, local presidents. If the tools are broken, the training is outdated, and the caseloads are unsustainable, that&rsquo;s not a people problem. That&rsquo;s a leadership problem. Fix what&rsquo;s setting people up to fail, then hold everyone to a higher standard.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">04</span>
+            <h3 class="principle-title">Two Terms. Then the Next Generation.</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Two terms as First VP/Treasurer. That&rsquo;s it. By the end of that, you&rsquo;ve either delivered on what you promised or you haven&rsquo;t. After that, real succession planning, knowledge transfer, and room for the next generation of leaders to step up. The goal is to build something that outlasts any one person in the role.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">05</span>
+            <h3 class="principle-title">Invest in the People Who Do the Work</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>Stewards, local presidents, bargaining teams, committee members. These are the people holding the union together at the ground level. They deserve training that&rsquo;s current, relevant to their collective agreement, and built for the fights they&rsquo;re actually in. Not a generic course that hasn&rsquo;t been updated in a decade. Not a video before bargaining. Real investment in the people who show up for members every day.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">06</span>
+            <h3 class="principle-title">Bread and Butter First</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>The union exists to make sure working people have a good standard of living and their rights are protected. Wages, representation, workload, safety. The number one issue members raised across every sector and every region was the same: affordability. Paycheques aren&rsquo;t keeping up. Grievances sit for years. Caseloads are unsustainable. Get the basics right first. Everything else flows from that.</p>
+          </div>
+        </div>
+        <div class="principle-card" data-principle>
+          <div class="principle-card-face">
+            <span class="principle-num">07</span>
+            <h3 class="principle-title">Accountable to Members, Not to the Board Table</h3>
+            <span class="principle-toggle">+</span>
+          </div>
+          <div class="principle-card-body">
+            <p>The First VP/Treasurer&rsquo;s job is oversight. That means asking hard questions about spending, hiring, and priorities, even when those questions are uncomfortable. If the person in this role owes their seat to the people sitting around that same table, who&rsquo;s actually doing the oversight? Members deserve a First VP who answers to them.</p>
+          </div>
+        </div>
       </div>
 
       <!-- Priority Action Items -->
@@ -1286,14 +1279,14 @@
       </div>
 
       <div class="priority-block anim">
-        <div class="priority-label">&#9673; Day One Priorities</div>
+        <div class="priority-label">&#9673; First 100 Days</div>
         <ul class="plan-action-list">
-          <li class="plan-action-item"><div class="plan-action-icon">📊</div><div><strong>Commission a staff workload audit.</strong> <span class="action-detail">How many members per rep? What are the backlogs? Where are the gaps? This is literally the first order of business.</span></div></li>
-          <li class="plan-action-item"><div class="plan-action-icon">🛠️</div><div><strong>Ask every staff member: &ldquo;Do you have what you need?&rdquo;</strong> <span class="action-detail">A skills inventory that starts with support, not blame. Fix the system before you blame the people in it.</span></div></li>
-          <li class="plan-action-item"><div class="plan-action-icon">🏥</div><div><strong>Launch a local health assessment.</strong> <span class="action-detail">Every local's structure, resources, and capacity reviewed. If we can see which locals are struggling, we can send support before they collapse.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🎤</div><div><strong>Monthly open townhalls with members.</strong> <span class="action-detail">The campaign model, continued from office. Your voice stays in the room, permanently.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">📊</div><div><strong>Commission a staff workload audit.</strong> <span class="action-detail">How many members per rep? What are the backlogs? Where are the gaps? You can&rsquo;t fix what you haven&rsquo;t measured. This is literally the first order of business.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🛠️</div><div><strong>Skills inventory for every staff member.</strong> <span class="action-detail">Starting with one question: do you have what you need to do your job? Support first, then standards.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">🏥</div><div><strong>Launch a local health assessment.</strong> <span class="action-detail">Every local&rsquo;s structure, resources, and capacity reviewed. If we can see which locals are struggling, we can send support before they collapse.</span></div></li>
           <li class="plan-action-item"><div class="plan-action-icon">💰</div><div><strong>Start the budget process earlier.</strong> <span class="action-detail">Every dollar of member dues should be traceable, defensible, and working harder than it is now. No more lazy across-the-board cuts.</span></div></li>
-          <li class="plan-action-item"><div class="plan-action-icon">💻</div><div><strong>Technology audit.</strong> <span class="action-detail">Scope every core system from UnionWare to grievance tracking. IT is my profession &mdash; I'll lead this personally.</span></div></li>
-          <li class="plan-action-item"><div class="plan-action-icon">🎤</div><div><strong>Monthly open townhalls with members.</strong> <span class="action-detail">The campaign model, continued from office. Your voice stays in the room &mdash; permanently.</span></div></li>
+          <li class="plan-action-item"><div class="plan-action-icon">💻</div><div><strong>Technology audit.</strong> <span class="action-detail">Scope every core system from UnionWare to grievance tracking. IT is my profession. I&rsquo;ll lead this personally.</span></div></li>
         </ul>
       </div>
 
@@ -1748,10 +1741,7 @@ document.querySelectorAll('.view-tab').forEach(btn => {
     document.getElementById('plan-content').style.display = view === 'plan' ? 'block' : 'none';
     // Re-trigger animations for newly visible content
     observeAnimations();
-    // Initialize plan carousel when plan tab is shown
-    if (view === 'plan' && !window._planCarouselInit) {
-      initPlanCarousel();
-    }
+
   });
 });
 
@@ -1793,65 +1783,19 @@ document.querySelectorAll('.summary-pill').forEach(pill => {
    PLAN CAROUSEL
    ═══════════════════════════════════════════ */
 
-function initPlanCarousel() {
-  window._planCarouselInit = true;
-  const carousel = document.getElementById('planCarousel');
-  if (!carousel) return;
-  const slides = carousel.querySelectorAll('.plan-slide');
-  const dotsContainer = document.getElementById('planDots');
-  const prevBtn = document.querySelector('.plan-carousel-prev');
-  const nextBtn = document.querySelector('.plan-carousel-next');
-  let current = 0;
+/* ═══════════════════════════════════════════
+   PRINCIPLE CARDS EXPAND/COLLAPSE
+   ═══════════════════════════════════════════ */
 
-  // Create dots
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'plan-carousel-dot' + (i === 0 ? ' active' : '');
-    dot.setAttribute('aria-label', 'Go to principle ' + (i + 1));
-    dot.addEventListener('click', () => goTo(i));
-    dotsContainer.appendChild(dot);
+document.querySelectorAll('[data-principle]').forEach(card => {
+  card.addEventListener('click', () => {
+    const wasOpen = card.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('[data-principle].open').forEach(c => c.classList.remove('open'));
+    // Toggle clicked
+    if (!wasOpen) card.classList.add('open');
   });
-
-  function goTo(index) {
-    current = index;
-    const slide = slides[index];
-    const scrollLeft = slide.offsetLeft - (carousel.offsetWidth - slide.offsetWidth) / 2;
-    carousel.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-    updateDots();
-  }
-
-  function updateDots() {
-    dotsContainer.querySelectorAll('.plan-carousel-dot').forEach((dot, i) => {
-      dot.classList.toggle('active', i === current);
-    });
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === slides.length - 1;
-  }
-
-  prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
-  nextBtn.addEventListener('click', () => { if (current < slides.length - 1) goTo(current + 1); });
-
-  let scrollTimer;
-  carousel.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const center = carousel.scrollLeft + carousel.offsetWidth / 2;
-      let closest = 0, closestDist = Infinity;
-      slides.forEach((slide, i) => {
-        const dist = Math.abs(center - (slide.offsetLeft + slide.offsetWidth / 2));
-        if (dist < closestDist) { closestDist = dist; closest = i; }
-      });
-      current = closest;
-      updateDots();
-    }, 60);
-  });
-
-  carousel.setAttribute('tabindex', '0');
-  carousel.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' && current > 0) { e.preventDefault(); goTo(current - 1); }
-    if (e.key === 'ArrowRight' && current < slides.length - 1) { e.preventDefault(); goTo(current + 1); }
-  });
-}
+});
 
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS
