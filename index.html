@@ -87,6 +87,41 @@
       max-width: 600px;
       margin: 0 0 32px;
     }
+    .hero-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 18px 24px;
+      background: rgba(0,0,0,0.35);
+      border-top: 1px solid rgba(220,166,148,0.25);
+      margin: 0 -32px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-nav-link {
+      font-family: var(--f-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 6px 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .hero-nav-link:hover {
+      color: #fff;
+      background: rgba(220,166,148,0.2);
+      border-color: var(--warm);
+    }
+    .hero-nav-divider {
+      color: rgba(255,255,255,0.2);
+      font-size: 1rem;
+    }
     .hero-tab {
       display: inline-block;
       padding: 14px 28px;
@@ -839,6 +874,9 @@
     }
     @media (max-width: 600px) {
       .hero { padding: 40px 20px 0; }
+      .hero-nav { margin: 0 -20px; gap: 10px; padding: 14px 16px; flex-wrap: wrap; }
+      .hero-nav-link { font-size: 0.78rem; padding: 5px 12px; }
+      .hero-nav-divider { display: none; }
       main { padding: 0 16px; }
       .confidence { padding: 24px 20px; }
       .issue-face { padding: 20px 20px; }
@@ -888,14 +926,7 @@
       color: rgba(255,255,255,0.2);
       font-size: 0.8rem;
     }
-    .utility-divider-bar {
-      margin: 0 6px;
-      color: rgba(255,255,255,0.15);
-      font-size: 0.9rem;
-    }
-    .utility-tab-link {
-      cursor: pointer;
-    }
+
 
     /* ── PLAN TAB: PRINCIPLES CAROUSEL ── */
     .plan-principles-wrap {
@@ -1130,12 +1161,6 @@
       <a href="https://www.ram4change.ca/blog/walk-the-talk" target="_blank" rel="noopener noreferrer">Why We Made This</a>
       <span class="utility-divider">&middot;</span>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSe4YyyAJJh1ariaum6mnoBAOOO9E51z6XPu_vriQOObB53Ccg/viewform" target="_blank" rel="noopener noreferrer">Add Your Voice</a>
-      <span class="utility-divider utility-divider-bar">|</span>
-      <a href="#" class="utility-tab-link" data-target-view="issues">What We Heard</a>
-      <span class="utility-divider">&middot;</span>
-      <a href="#" class="utility-tab-link" data-target-view="map">Who's in the Room</a>
-      <span class="utility-divider">&middot;</span>
-      <a href="#" class="utility-tab-link" data-target-view="plan">The Plan & Principles</a>
     </div>
   </nav>
 
@@ -1147,6 +1172,13 @@
       <p class="hero-subtitle">A member-driven mandate isn't a slogan. It's a practice.</p>
       <p class="hero-desc">Real change starts with real information — not slogans, not speeches, not campaign promises. Over five months and seven open sessions, OPSEU members told us what's working, what's failing, and what they need. This is what they said — and what Ram plans to do about each one.</p>
     </div>
+    <nav class="hero-nav">
+      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="issues">What We Heard</a>
+      <span class="hero-nav-divider">&middot;</span>
+      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="map">Who's in the Room</a>
+      <span class="hero-nav-divider">&middot;</span>
+      <a href="#" class="hero-nav-link utility-tab-link" data-target-view="plan">The Plan &amp; Principles</a>
+    </nav>
   </header>
 
   <main>
@@ -1198,7 +1230,7 @@
       <!-- Principles Carousel -->
       <div class="plan-section-header anim">
         <div class="plan-section-tag">Practicing My Promises</div>
-        <h2 class="plan-section-title">Six Principles</h2>
+        <h2 class="plan-section-title">Seven Principles</h2>
         <p class="plan-section-desc">These aren't slogans &mdash; they're commitments this campaign is already living by.</p>
       </div>
 
@@ -1207,34 +1239,39 @@
         <button class="plan-carousel-nav plan-carousel-next" aria-label="Next">&#8594;</button>
         <div class="plan-principles-carousel" id="planCarousel">
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 01 of 06</div>
-            <div class="plan-principle-name">See the Problem Before You Fix It</div>
-            <p class="plan-principle-text">No more guessing. Before any reform, we measure what's actually happening &mdash; staff workload, local health, where the money goes. You can't fix what you can't see.</p>
+            <div class="plan-counter">Principle 01 of 07</div>
+            <div class="plan-principle-name">Measure Before You Move</div>
+            <p class="plan-principle-text">Before any reform, we measure what&rsquo;s actually happening. Staff workload, local health, where the money goes, which services are reaching members and which aren&rsquo;t. How many grievances are backlogged? How long is the average member waiting for representation? Which locals are thriving and which are collapsing under caseload? Right now, nobody&rsquo;s tracking this. You can&rsquo;t fix what you refuse to count, and you can&rsquo;t ask members to trust the process when there&rsquo;s no data to back it up.</p>
           </div></div>
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 02 of 06</div>
-            <div class="plan-principle-name">Give People the Tools, Then Expect Results</div>
-            <p class="plan-principle-text">The first question isn't &ldquo;who's failing?&rdquo; &mdash; it's &ldquo;do you have what you need to do your job?&rdquo; Fix the system before you blame the people in it.</p>
+            <div class="plan-counter">Principle 02 of 07</div>
+            <div class="plan-principle-name">Demonstrate, Don&rsquo;t Declare</div>
+            <p class="plan-principle-text">I actively practice what I&rsquo;m promising to do as First VP. Leaders shouldn&rsquo;t need an official role to demonstrate how they show up. The townhalls, the member insight dashboard, the delegate toolkit. All built before winning anything, with a small team and limited resources. That&rsquo;s not a slogan. That&rsquo;s how the office should operate.</p>
           </div></div>
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 03 of 06</div>
-            <div class="plan-principle-name">My Running Mate Is You</div>
-            <p class="plan-principle-text">No slate. No backroom deals. No loyalty debts. The First VP/Treasurer should be a check and balance on power &mdash; not an extension of it.</p>
+            <div class="plan-counter">Principle 03 of 07</div>
+            <div class="plan-principle-name">Fix the System Before You Blame the People In It</div>
+            <p class="plan-principle-text">When a local is struggling or a staff member is falling behind, the first question isn&rsquo;t &ldquo;who&rsquo;s failing?&rdquo; It&rsquo;s &ldquo;do you have what you need to do your job?&rdquo; Staff, stewards, local presidents. If the tools are broken, the training is outdated, and the caseloads are unsustainable, that&rsquo;s not a people problem. That&rsquo;s a leadership problem. Fix what&rsquo;s setting people up to fail, then hold everyone to a higher standard.</p>
           </div></div>
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 04 of 06</div>
-            <div class="plan-principle-name">Show the Work</div>
-            <p class="plan-principle-text">This campaign isn't built on promises &mdash; it's built on practice. The townhalls, the dashboard, the data are a proof-of-concept for how the office should run.</p>
+            <div class="plan-counter">Principle 04 of 07</div>
+            <div class="plan-principle-name">Two Terms. Then the Next Generation.</div>
+            <p class="plan-principle-text">Two terms as First VP/Treasurer. That&rsquo;s it. By the end of that, you&rsquo;ve either delivered on what you promised or you haven&rsquo;t. After that, real succession planning, knowledge transfer, and room for the next generation of leaders to step up. The goal is to build something that outlasts any one person in the role.</p>
           </div></div>
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 05 of 06</div>
-            <div class="plan-principle-name">Wages, Representation, Protection</div>
-            <p class="plan-principle-text">The union exists for one reason: to make sure working people have a good standard of living and their rights are protected. Everything else flows from that.</p>
+            <div class="plan-counter">Principle 05 of 07</div>
+            <div class="plan-principle-name">Invest in the People Who Do the Work</div>
+            <p class="plan-principle-text">Stewards, local presidents, bargaining teams, committee members. These are the people holding the union together at the ground level. They deserve training that&rsquo;s current, relevant to their collective agreement, and built for the fights they&rsquo;re actually in. Not a generic course that hasn&rsquo;t been updated in a decade. Not a video before bargaining. Real investment in the people who show up for members every day.</p>
           </div></div>
           <div class="plan-slide"><div class="plan-card">
-            <div class="plan-counter">Principle 06 of 06</div>
-            <div class="plan-principle-name">Eight Years, Then It's Your Turn</div>
-            <p class="plan-principle-text">No career politicians here. Two terms maximum &mdash; then real succession planning, knowledge transfer, and room for the next generation of leaders.</p>
+            <div class="plan-counter">Principle 06 of 07</div>
+            <div class="plan-principle-name">Bread and Butter First</div>
+            <p class="plan-principle-text">The union exists to make sure working people have a good standard of living and their rights are protected. Wages, representation, workload, safety. The number one issue members raised across every sector and every region was the same: affordability. Paycheques aren&rsquo;t keeping up. Grievances sit for years. Caseloads are unsustainable. Get the basics right first. Everything else flows from that.</p>
+          </div></div>
+          <div class="plan-slide"><div class="plan-card">
+            <div class="plan-counter">Principle 07 of 07</div>
+            <div class="plan-principle-name">Accountable to Members, Not to the Board Table</div>
+            <p class="plan-principle-text">The First VP/Treasurer&rsquo;s job is oversight. That means asking hard questions about spending, hiring, and priorities, even when those questions are uncomfortable. If the person in this role owes their seat to the people sitting around that same table, who&rsquo;s actually doing the oversight? Members deserve a First VP who answers to them.</p>
           </div></div>
         </div>
         <div class="plan-carousel-dots" id="planDots"></div>
